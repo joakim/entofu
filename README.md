@@ -5,11 +5,11 @@ It is yours for the taking.
 
 (or Base524288)
 
-A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as [valid](https://www.unicode.org/faq/basic_q.html#12) but unused Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
+A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as [valid](https://www.unicode.org/faq/basic_q.html#12) unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
 
-Binary data is stuffed into the 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 through 11. [^1]
+Binary data is stuffed into 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 through 11. [^1]
 
-That's the 8 empty planes in the middle of [the Unicode codespace](/assets/unicode-map.png).
+That's the 8 empty planes in the middle of [the Unicode codespace](/assets/unicode-map.png), or almost half of Unicode.
 
 Each 32-bit code point holds 19 bits of binary data, 1 in its first byte and 3 × 6 in its continuation bytes. [^2]
 
