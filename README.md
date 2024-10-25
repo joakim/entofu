@@ -45,19 +45,19 @@ On the other hand, tofus aren't exactly typable. And they're only readable if th
 
 ### Examples
 
-| Input        | Output                        |         |
-| ------------ | ----------------------------- | ------- |
-| 128-bit UUID | `󏀿󏀿󏀿󏀿󏀿󏀿󏀿`                     | 7 tofu  |
-| 256-bit hash | `󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿`              | 14 tofu |
-| 512-bit hash | `󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿` | 27 tofu |
+| Input        | Output                      |         |
+| ------------ | --------------------------- | ------- |
+| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofu  |
+| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofu |
+| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofu |
 
 #### Comparing lengths of UUID encoding
 
-| Encoding     | Output                                 |         |       |
-| ------------ | -------------------------------------- | ------- | ----- |
-| Base16       | `90f119cf-9fc4-4090-acc2-0000bc711dc3` | 36 char | 100%  |
-| Base64       | `kPEZz5/EQJCswgAAvHEdww`               | 22 char | 61%   |
-| Base524288   | `󏀿󏀿󏀿󏀿󏀿󏀿󏀿`                              | 7 tofu  | 19%   |
+| Encoding     | Output                               |         |       |
+| ------------ | ------------------------------------ | ------- | ----- |
+| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char | 100%  |
+| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char | 61%   |
+| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu  | 19%   |
 
 
 ### Noncharacters
