@@ -7,7 +7,9 @@ It is yours for the taking.
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as [valid](https://www.unicode.org/faq/basic_q.html#12) but unused Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
 
-Binary data is stuffed into the 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 through 11. [^1] That's the 8 empty planes in the middle of [the Unicode codespace](/assets/unicode-map.png).
+Binary data is stuffed into the 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 through 11. [^1]
+
+That's the 8 empty planes in the middle of [the Unicode codespace](/assets/unicode-map.png).
 
 Each 32-bit code point holds 19 bits of binary data, 1 in its first byte and 3 × 6 in its continuation bytes. [^2]
 
@@ -20,22 +22,22 @@ Each 32-bit code point holds 19 bits of binary data, 1 in its first byte and 3 �
 
 ### Efficiency
 
-Each "character" contains ~3 × more data than Base64, making it visually compact. The price to pay is ~2 × more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
+Each character contains 3× more data than Base64, making it visually compact. The price to pay is 2× more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
 
 In other words, this is not suitable for large binaries. But it's useful for embedding smaller binary data, such as UUIDs and hashes, within Unicode text.
 
 #### Some theoretical numbers
 
-|            | Base64    | Base524288    |
-| ---------- | --------- | ------------- |
-| Efficiency | 75%       | 59.375%       |
-| Overhead   | 33.333%   | 68.4210526%   |
-| Length     | 1.33333 × | 0.421052632 × |
+|            | Base64   | Base524288   |
+| ---------- | -------- | ------------ |
+| Efficiency | 75%      | 59.375%      |
+| Overhead   | 33.333%  | 68.4210526%  |
+| Length     | 1.33333× | 0.421052632× |
 
 Actual numbers will vary depending on the amount of padding.
 
 
-### Textual representation
+### Output
 
 Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ (that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character)), which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^3]
 
@@ -95,7 +97,6 @@ When detofuing, any remaining bits must be dropped.
 ### Inspiration
 
 - [Base122](https://blog.kevinalbs.com/base122) by Kevin Albertson
-- □
 
 ---
 
@@ -103,5 +104,9 @@ When detofuing, any remaining bits must be dropped.
 
 
 [^1]: Plus 16 substitute code points in plane 12, see [Noncharacters](#noncharacters).
-[^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes. `11` is used for [noncharacter substitutes](#noncharacters).
-[^3]: I like the glyph used by Firefox, a rectangle with the code point in hex. It has that binary feel to it.
+[^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes.
+
+      `11` is used for [noncharacter substitutes](#noncharacters).
+[^3]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it.
+
+      I also like GitHub's glyph. It looks like a block of tofu that has been sliced into 6 pieces.
