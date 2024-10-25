@@ -37,7 +37,7 @@ In other words, this is not suitable for large binaries. But it's useful for emb
 Actual numbers will vary depending on the amount of padding.
 
 
-### Output
+### Textual representation
 
 Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ (that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character)), which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^3]
 
@@ -47,19 +47,21 @@ On the other hand, tofus aren't exactly typable. And they're only readable if th
 
 ### Examples
 
-| Input        | Output                      |         |
-| ------------ | --------------------------- | ------- |
-| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofu  |
-| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofu |
-| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofu |
+| Input        | Output                      | Length  | UTF-8 size    |
+| ------------ | --------------------------- | ------- | ------------- |
+| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofu  | 224 (175%)    |
+| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofu | 448 (175%)    |
+| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofu | 864 (168.75%) |
 
 #### Comparing lengths of UUID encoding
 
-| Encoding     | Output                               |         |       |
-| ------------ | ------------------------------------ | ------- | ----- |
-| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char | 100%  |
-| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char | 61%   |
-| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu  | 19%   |
+| Encoding     | Output                               | Length        | UTF-8 size        |
+| ------------ | ------------------------------------ | ------------- | ----------------- |
+| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char       | 288 bits (225%)   |
+| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char (61%) | 176 bits (137.5%) |
+| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu (19%)  | 224 bits (175%)   |
+
+Tofu encoded UUID is ⅕ the length and ¾ the size of the standard hexadecimal format.
 
 
 ### Noncharacters
