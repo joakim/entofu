@@ -39,11 +39,11 @@ Actual numbers will vary depending on the amount of padding.
 
 ### Textual representation
 
-Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ (that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character)), which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^3]
+Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^3]
 
 Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in markup/programming languages and protocols. And unlike [Base122](#inspiration), it doesn't contain characters that make keyboard navigation and copy/paste difficult. Tofus are unproblematic.
 
-On the other hand, tofus aren't exactly typable. And they're only readable if the code points are displayed, as in Firefox. Otherwise, it's all tofu.
+On the other hand, tofus aren't exactly typable. And they're only vaguely readable if the code points are displayed, like in Firefox. Otherwise, it's all tofu.
 
 ### Examples
 
@@ -68,7 +68,7 @@ Tofu encoded UUID is ⅕ the length and ¾ the size of the standard hexadecimal 
 
 Unicode defines the last two code points of each plane as reserved [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters).
 
-When entofuing, these 16 noncharacters must therefore be translated to substitute code points (special tofu):
+When entofuing, these noncharacters must therefore be translated to substitute code points (16 special tofu):
 
 - `U+4FFFE` ⟷ `U+C0000`
 - `U+4FFFF` ⟷ `U+C0001`
