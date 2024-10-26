@@ -19,12 +19,16 @@ Each 32-bit code point holds 19 bits of binary data, 1 in its first byte and 3 �
 | Binary | `11110001` | `10001111` | `10111111` | `10000000` |
 | Mask   | `111100__` | `10______` | `10______` | `10______` |
 
+It's essentially embedding binary data inside valid Unicode text. [^3]
+
 
 ### Efficiency
 
-Each character contains 3× more data than Base64, making it visually compact. The price to pay is 2× more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
+Each character contains _~3×_ more data than Base64, making it visually compact. The price to pay is _~2×_ more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
 
-In other words, this is not suitable for large binaries. But it's useful for embedding smaller binary data, such as UUIDs and hashes, within Unicode text.
+In other words, this is not suitable for large binaries if size matters.
+
+But it's useful for encoding smaller binary data, such as UUIDs and hashes, where length matters.
 
 #### Some theoretical numbers
 
@@ -39,7 +43,7 @@ Actual numbers will vary depending on the amount of padding.
 
 ### Textual representation
 
-Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^3]
+Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^4]
 
 Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in markup/programming languages and protocols. And unlike [Base122](#inspiration), it doesn't contain characters that make keyboard navigation and copy/paste difficult. Tofus are unproblematic.
 
@@ -47,21 +51,32 @@ On the other hand, tofus aren't exactly typable. And they're only vaguely readab
 
 ### Examples
 
-| Input        | Output                      | Length  | UTF-8 size    |
-| ------------ | --------------------------- | ------- | ------------- |
-| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofu  | 224 (175%)    |
-| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofu | 448 (175%)    |
-| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofu | 864 (168.75%) |
+| Input        | Output                      | Length   | Size in UTF-8      |
+| ------------ | --------------------------- | -------- | ------------------ |
+| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofus  | 224 bits (175%)    |
+| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofus | 448 bits (175%)    |
+| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofus | 864 bits (168.75%) |
 
 #### Comparing lengths of UUID encoding
 
-| Encoding     | Output                               | Length           | UTF-8 size        |
-| ------------ | ------------------------------------ | ---------------- | ----------------- |
-| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char (225%)   | 288 bits (225%)   |
-| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char (137.5%) | 176 bits (137.5%) |
-| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu (43.75%)  | 224 bits (175%)   |
+| Encoding     | Output                               | Length            | Size in UTF-8     |
+| ------------ | ------------------------------------ | ----------------- | ----------------- |
+| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 chars (225%)   | 288 bits (225%)   |
+| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 chars (137.5%) | 176 bits (137.5%) |
+| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofus (43.75%)  | 224 bits (175%)   |
 
-Tofu encoded UUID is _⅕_ the length and _¾_ the size of the standard hexadecimal format.
+Base524288 encoded UUIDs are:
+- _~¾_ the size of the standard UUID format
+- _~1⅓×_ the size of the Base64 encoding
+
+In a monospaced typeface, they are:
+- _~⅕_ the length of the standard UUID format
+- _~⅓_ the length of the Base64 encoding
+
+In a proportional typeface, they are:
+- _~⅓_ the length of the standard UUID format
+- _~½_ the length of the Base64 encoding
+
 
 
 ### Noncharacters
@@ -109,6 +124,7 @@ When detofuing, any remaining bits must be dropped.
 [^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes.
 
       `11` is used for [noncharacter substitutes](#noncharacters).
-[^3]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it.
+[^3]: Or making vegan tofu without breaking any eggs, if you like.
+[^4]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it.
 
       I also like GitHub's glyph. It looks like a block of tofu that has been sliced into 6 pieces.
