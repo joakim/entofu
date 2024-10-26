@@ -55,13 +55,13 @@ On the other hand, tofus aren't exactly typable. And they're only vaguely readab
 
 #### Comparing lengths of UUID encoding
 
-| Encoding     | Output                               | Length        | UTF-8 size        |
-| ------------ | ------------------------------------ | ------------- | ----------------- |
-| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char       | 288 bits (225%)   |
-| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char (61%) | 176 bits (137.5%) |
-| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu (19%)  | 224 bits (175%)   |
+| Encoding     | Output                               | Length           | UTF-8 size        |
+| ------------ | ------------------------------------ | ---------------- | ----------------- |
+| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 char (225%)   | 288 bits (225%)   |
+| Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 char (137.5%) | 176 bits (137.5%) |
+| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofu (43.75%)  | 224 bits (175%)   |
 
-Tofu encoded UUID is ⅕ the length and ¾ the size of the standard hexadecimal format.
+Tofu encoded UUID is _⅕_ the length and _¾_ the size of the standard hexadecimal format.
 
 
 ### Noncharacters
