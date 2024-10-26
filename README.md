@@ -51,13 +51,16 @@ On the other hand, tofus aren't exactly typable. And they're only vaguely readab
 
 ### Examples
 
-| Input        | Output                      | Length   | Size in UTF-8      |
-| ------------ | --------------------------- | -------- | ------------------ |
-| 128-bit UUID | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofus  | 224 bits (175%)    |
-| 256-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofus | 448 bits (175%)    |
-| 512-bit hash | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofus | 864 bits (168.75%) |
+| Input   | Output                      | Length   | Size in UTF-8      |
+| ------- | --------------------------- | -------- | ------------------ |
+| 128-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofus  | 224 bits (175%)    |
+| 256-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofus | 448 bits (175%)    |
+| 512-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofus | 864 bits (168.75%) |
 
-#### Comparing lengths of UUID encoding
+
+### Comparisons
+
+Compared to popular binary-to-text encodings of UUIDs…
 
 | Encoding     | Output                               | Length            | Size in UTF-8     |
 | ------------ | ------------------------------------ | ----------------- | ----------------- |
@@ -66,7 +69,7 @@ On the other hand, tofus aren't exactly typable. And they're only vaguely readab
 | Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofus (43.75%)  | 224 bits (175%)   |
 
 Base524288 encoded UUIDs are:
-- Almost _¾_ the size of the standard UUID format
+- **Almost _¾_ the size of the standard UUID format**
 - Almost _1¼×_ the size of the Base64 encoding
 
 In a monospaced typeface, they are:
@@ -74,8 +77,8 @@ In a monospaced typeface, they are:
 - Less than _⅓_ the length of the Base64 encoding
 
 In a proportional typeface, they are:
-- Almost _⅓_ the length of the standard UUID format
-- Almost _½_ the length of the Base64 encoding
+- About _⅓_ the length of the standard UUID format
+- About _½_ the length of the Base64 encoding
 
 
 
