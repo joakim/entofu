@@ -124,10 +124,6 @@ When detofuing, any remaining bits must be dropped.
 
 
 [^1]: Plus 16 substitute code points in plane 12, see [Noncharacters](#noncharacters).
-[^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes.
-
-      `11` is used for [noncharacter substitutes](#noncharacters).
+[^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes. `11` is used for [noncharacter substitutes](#noncharacters).
 [^3]: Or making vegan tofu omelette without breaking any eggs, if you like.
-[^4]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it.
-
-      I also like GitHub's glyph. It looks like a block of tofu that has been sliced into 6 pieces.
+[^4]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it. I also like GitHub's glyph. It looks like a block of tofu that has been sliced into 6 pieces.
