@@ -70,7 +70,7 @@ Compared to popular binary-to-text encodings of UUIDs…
 
 Base524288 encoded UUIDs are:
 - **Almost _¾_ the size of the standard UUID format**
-- Almost _1¼×_ the size of the Base64 encoding
+- Almost _1¼_ the size of the Base64 encoding
 
 In a monospaced typeface, they are:
 - Less than _⅕_ the length of the standard UUID format
