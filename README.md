@@ -28,11 +28,11 @@ In other words, this is not suitable for large binaries. But it's useful for emb
 
 #### Some theoretical numbers
 
-|            | Base64   | Base524288   |
-| ---------- | -------- | ------------ |
-| Efficiency | 75%      | 59.375%      |
-| Overhead   | 33.333%  | 68.4210526%  |
-| Length     | 1.33333× | 0.421052632× |
+|            | Base64   | Base524288  |
+| ---------- | -------- | ----------- |
+| Efficiency | 75%      | 59.375%     |
+| Overhead   | 33.333%  | 68.4210526% |
+| Length     | 133.333% | 42.1052632% |
 
 Actual numbers will vary depending on the amount of padding.
 
