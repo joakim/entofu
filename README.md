@@ -84,9 +84,9 @@ In a proportional typeface, they are:
 
 ### Noncharacters
 
-Unicode defines the last two code points of each plane as reserved [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters).
+Unicode reserves the last two code points of each plane as [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters).
 
-When entofuing, these noncharacters must therefore be translated to substitute code points (16 special tofu):
+When entofuing, any noncharacters produced must be replaced with their respective substitute code points (16 special tofu):
 
 - `U+4FFFE` ⟷ `U+C0000`
 - `U+4FFFF` ⟷ `U+C0001`
@@ -105,7 +105,7 @@ When entofuing, these noncharacters must therefore be translated to substitute c
 - `U+BFFFE` ⟷ `U+C000E`
 - `U+BFFFF` ⟷ `U+C000F`
 
-When detofuing, the substitute code points must be translated back to noncharacters before reading their binary data.
+When detofuing, any substitute code points encountered must be replaced with their respective noncharacters before reading their binary data.
 
 
 ### Padding
