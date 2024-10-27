@@ -1,13 +1,10 @@
-> **This idea** is released into the public domain.\
-It is yours for the taking.
-
 # □ Entofu
 
-(or Base524288)
+(Base524288)
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as [valid](https://www.unicode.org/faq/basic_q.html#12) unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
 
-Binary data is stuffed into 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 through 11. [^1]
+Binary data is stuffed into 524,288 code points of the [unassigned Unicode planes](https://en.wikipedia.org/wiki/Plane_(Unicode)#Unassigned_planes) 4 to 11. [^1]
 
 That's the 8 empty planes in the middle of [the Unicode codespace](/assets/unicode-map.png), or almost half of Unicode.
 
@@ -52,17 +49,17 @@ Actual numbers will vary depending on the amount of padding.
 
 Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^4]
 
-Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in markup/programming languages and protocols. And unlike the related [Base122](#inspiration), it doesn't contain characters that make keyboard navigation and copy/paste difficult. Tofus are unproblematic.
+Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in coding languages and protocols. And unlike the related [Base122](#inspiration), it doesn't contain characters that make keyboard navigation, selection and copy/paste difficult. Tofus are unproblematic.
 
-On the other hand, tofus aren't exactly typable. And they're only vaguely readable if the code points are displayed, like in Firefox. Otherwise, it's all tofu.
+That said, tofus aren't exactly typable. And they're only vaguely readable if the code points are displayed, like in Firefox. Otherwise, it's all tofu.
 
 ### Examples
 
 | Input   | Output                      | Length   | Size in UTF-8      |
 | ------- | --------------------------- | -------- | ------------------ |
-| 128-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                     | 7 tofus  | 224 bits (175%)    |
-| 256-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿              | 14 tofus | 448 bits (175%)    |
-| 512-bit | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿󏀿 | 27 tofus | 864 bits (168.75%) |
+| 128-bit | 򂓧򒳫񴮕񯐨򼶘񅼍򈦠                     | 7 tofus  | 224 bits (175%)    |
+| 256-bit | 򏘲񭯸򡋒񅉚񈭼򛬚񛊌򡡴񛕱򥕩򯿖򞞨񂔜򰠀              | 14 tofus | 448 bits (175%)    |
+| 512-bit | 򱞂򶭼񰈶򫺬򞗅򧤝򵿕򊓱񎳱񭾡񁿄򮚗񳶂򞥵񰈣񼸇򱟆򐗑񍰒򠂸򵣬񆢱񙂙񇍁񙧠񥬷񫛞 | 27 tofus | 864 bits (168.75%) |
 
 
 ### Comparisons
@@ -73,7 +70,7 @@ Compared to popular binary-to-text encodings of UUIDs…
 | ------------ | ------------------------------------ | ----------------- | ----------------- |
 | Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 chars (225%)   | 288 bits (225%)   |
 | Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 chars (137.5%) | 176 bits (137.5%) |
-| Base524288   | 󏀿󏀿󏀿󏀿󏀿󏀿󏀿                              | 7 tofus (43.75%)  | 224 bits (175%)   |
+| Base524288   | 򩦠򄢧򮨲񞌶񒧼񳓜񶄠                              | 7 tofus (43.75%)  | 224 bits (175%)   |
 
 Base524288 encoded UUIDs are:
 - **Almost _¾_ the size of the standard UUID format**
@@ -86,7 +83,6 @@ In a monospaced typeface, they are:
 In a proportional typeface, they are:
 - About _⅓_ the length of the standard UUID format
 - About _½_ the length of the Base64 encoding
-
 
 
 ### Noncharacters
@@ -119,6 +115,7 @@ When decoding, any substitute code points encountered must be replaced with thei
 ### Inspiration
 
 - [Base122](https://blog.kevinalbs.com/base122) by Kevin Albertson
+- [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64)
 
 ---
 
@@ -127,5 +124,5 @@ When decoding, any substitute code points encountered must be replaced with thei
 
 [^1]: Plus 16 substitute code points in plane 12, see [Noncharacters](#noncharacters).
 [^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes. `11` is used for [noncharacter substitutes](#noncharacters).
-[^3]: Or making vegan tofu omelette without breaking any eggs, if you like.
+[^3]: Or making vegan tofu omelette without breaking any eggs.
 [^4]: I like the glyph used by Firefox, a rectangle displaying the code point in hex. It has that binary feel to it. I also like GitHub's glyph. It looks like a block of tofu that has been sliced into 6 pieces.
