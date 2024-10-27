@@ -22,6 +22,13 @@ Each 32-bit code point holds 19 bits of binary data, 1 in its first byte and 3 �
 It's essentially embedding binary data inside valid Unicode text. [^3]
 
 
+### Reference implementation
+
+See [src/](./src/index.ts) for a simple reference implementation that's surprisingly small.
+
+The encoder apparently works, the decoder needs work. Tests are also needed.
+
+
 ### Efficiency
 
 Each character contains _~3×_ more data than Base64, making it visually compact. The price to pay is _~2×_ more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
@@ -84,34 +91,29 @@ In a proportional typeface, they are:
 
 ### Noncharacters
 
-Unicode reserves the last two code points of each plane as [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters).
+Unicode reserves the last two code points of each plane as [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters) – characters that don't want to be characters.
 
-When entofuing, any noncharacters produced must be replaced with their respective substitute code points (16 special tofu):
+When encoding, any noncharacters that appear must therefore be replaced with their respective substitute code points.
 
-- `U+4FFFE` ⟷ `U+C0000`
-- `U+4FFFF` ⟷ `U+C0001`
-- `U+5FFFE` ⟷ `U+C0002`
-- `U+5FFFF` ⟷ `U+C0003`
-- `U+6FFFE` ⟷ `U+C0004`
-- `U+6FFFF` ⟷ `U+C0005`
-- `U+7FFFE` ⟷ `U+C0006`
-- `U+7FFFF` ⟷ `U+C0007`
-- `U+8FFFE` ⟷ `U+C0008`
-- `U+8FFFF` ⟷ `U+C0009`
-- `U+9FFFE` ⟷ `U+C000A`
-- `U+9FFFF` ⟷ `U+C000B`
-- `U+AFFFE` ⟷ `U+C000C`
-- `U+AFFFF` ⟷ `U+C000D`
-- `U+BFFFE` ⟷ `U+C000E`
-- `U+BFFFF` ⟷ `U+C000F`
+Special tofu:
+- `U+4FFFE` ⟷ `U+C03FE`
+- `U+4FFFF` ⟷ `U+C03FF`
+- `U+5FFFE` ⟷ `U+C07FE`
+- `U+5FFFF` ⟷ `U+C07FF`
+- `U+6FFFE` ⟷ `U+C0BFE`
+- `U+6FFFF` ⟷ `U+C0BFF`
+- `U+7FFFE` ⟷ `U+C0FFE` ☕️
+- `U+7FFFF` ⟷ `U+C0FFF`
+- `U+8FFFE` ⟷ `U+C23FE`
+- `U+8FFFF` ⟷ `U+C23FF`
+- `U+9FFFE` ⟷ `U+C27FE`
+- `U+9FFFF` ⟷ `U+C27FF`
+- `U+AFFFE` ⟷ `U+C2BFE`
+- `U+AFFFF` ⟷ `U+C2BFF`
+- `U+BFFFE` ⟷ `U+C2FFE`
+- `U+BFFFF` ⟷ `U+C2FFF`
 
-When detofuing, any substitute code points encountered must be replaced with their respective noncharacters before reading their binary data.
-
-
-### Padding
-
-When entofuing, any remaining bits must be padded with `0`.\
-When detofuing, any remaining bits must be dropped.
+When decoding, any substitute code points encountered must be replaced with their respective noncharacters before reading their binary data.
 
 
 ### Inspiration
