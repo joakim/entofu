@@ -72,7 +72,7 @@ export function entofu(input: Uint8Array, base262144 = false) {
     // If a sneaky noncharacter is produced, transform it into a special substitute tofu.
     if (isNoncharacter(bytes)) {
       bytes[2] = bytes[1]
-      bytes[1] = ((bytes[0] >> 0) & 2) | UNICODE_CONTINUATION_MASK
+      bytes[1] = ((bytes[0] >> 1) & 1) | UNICODE_CONTINUATION_MASK
       bytes[0] = 0b11 | UNICODE_LEADING_MASK
     }
 

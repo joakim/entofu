@@ -68,7 +68,7 @@ Compared to popular binary-to-text encodings of UUIDs…
 
 | Encoding     | Output                               | Length            | Size in UTF-8     |
 | ------------ | ------------------------------------ | ----------------- | ----------------- |
-| Base16       | 90f119cf-9fc4-4090-acc2-0000bc711dc3 | 36 chars (225%)   | 288 bits (225%)   |
+| Base16       | 90f119cf-9fc4-4090-acc1-0000bc711dc3 | 36 chars (225%)   | 288 bits (225%)   |
 | Base64       | kPEZz5/EQJCswgAAvHEdww               | 22 chars (137.5%) | 176 bits (137.5%) |
 | Base524288   | 򩦠򄢧򮨲񞌶񒧼񳓜񶄠                              | 7 tofus (43.75%)  | 224 bits (175%)   |
 
@@ -100,14 +100,14 @@ Special tofu:
 - `U+6FFFF` ⟷ `U+C0BFF`
 - `U+7FFFE` ⟷ `U+C0FFE` ☕️
 - `U+7FFFF` ⟷ `U+C0FFF`
-- `U+8FFFE` ⟷ `U+C23FE`
-- `U+8FFFF` ⟷ `U+C23FF`
-- `U+9FFFE` ⟷ `U+C27FE`
-- `U+9FFFF` ⟷ `U+C27FF`
-- `U+AFFFE` ⟷ `U+C2BFE`
-- `U+AFFFF` ⟷ `U+C2BFF`
-- `U+BFFFE` ⟷ `U+C2FFE`
-- `U+BFFFF` ⟷ `U+C2FFF`
+- `U+8FFFE` ⟷ `U+C13FE`
+- `U+8FFFF` ⟷ `U+C13FF`
+- `U+9FFFE` ⟷ `U+C17FE`
+- `U+9FFFF` ⟷ `U+C17FF`
+- `U+AFFFE` ⟷ `U+C1BFE`
+- `U+AFFFF` ⟷ `U+C1BFF`
+- `U+BFFFE` ⟷ `U+C1FFE`
+- `U+BFFFF` ⟷ `U+C1FFF`
 
 When decoding, any substitute code points encountered must be replaced with their respective noncharacters before reading their binary data.
 
