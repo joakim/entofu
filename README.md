@@ -49,7 +49,7 @@ Actual numbers will vary depending on the amount of padding.
 
 Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by system and [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). [^4]
 
-Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in coding languages and protocols. And unlike the related [Base122](#inspiration), it doesn't contain characters that make keyboard navigation, selection and copy/paste difficult. Tofus are unproblematic.
+Unlike many base encodings, the encoded text doesn't contain characters that have special meaning in code and protocols. And unlike the related [Base122](#inspiration), it doesn't contain characters that make keyboard navigation, selection and copy/paste difficult. Tofus are unproblematic.
 
 That said, tofus aren't exactly typable. And they're only vaguely readable if the code points are displayed, like in Firefox. Otherwise, it's all tofu.
 
