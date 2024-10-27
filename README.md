@@ -30,7 +30,7 @@ The encoder apparently works, the decoder needs work. Tests are also needed.
 
 Each character contains _~3×_ more data than Base64, making it visually compact. The price to pay is _~2×_ more overhead than Base64, relative to the original binary data (when stored in memory and on disk).
 
-In other words, this is not suitable for large binaries if size matters.
+In other words, this is not suitable for large binaries if size matters (nor is Base64).
 
 But it's useful for encoding smaller binary data, such as UUIDs and hashes, where length matters.
 
