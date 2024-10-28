@@ -112,10 +112,12 @@ When decoding, any substitute code points encountered must be replaced with thei
 - [Base122](https://blog.kevinalbs.com/base122) by Kevin Albertson
 - [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64)
 
+## License
+
+- [Public domain](/LICENSE.md)
+- [The Unicode map](/assets/unicode-map.png) is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/) (thanks!)
+
 ---
-
-- [assets/unicode-map.png](/assets/unicode-map.png) is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/). Thanks!
-
 
 [^1]: Plus 16 substitute code points in plane 12, see [Noncharacters](#noncharacters).
 [^2]: It looks like 20 bits, but the first two places represent one bit, alternating between `01` and `10`, so that it uses the correct planes. `11` is used for [noncharacter substitutes](#noncharacters).
