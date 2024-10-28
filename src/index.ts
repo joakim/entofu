@@ -1,15 +1,15 @@
 /**
- * A reference implementation of the Base524288 Entofu algorithm.
+ * Reference implementation of the Entofu algorithm for Base524288/Base262144.
  *
  * On Base262144:
- * It is arguably cleaner, with 3 x 6 bits, but objectively not as efficient as
- * using all 19 bits and 8 Unicode planes. It may however be more amenable to
- * optimization, by borrowing tricks from Base64 libraries. I have therefore
- * included it as an option.
+ * It is arguably cleaner, with only 3 x 6 bits, but objectively not as
+ * efficient as using all 19 bits and 8 Unicode planes. It should however be
+ * easier to implement, and more amenable to optimization by borrowing tricks
+ * from Base64 libraries. I have therefore included it as an option.
  *
  * Base262144 produces at least one tofu more. If length is of importance,
- * stick to Base524288. Note that although they use the same code and occupy
- * the same Unicode planes, the two are not interchangeable.
+ * stick to Base524288. Note that because they use the same code and occupy the
+ * same Unicode planes, they can be indistinguishable, but not interchangeable.
  */
 
 /** Leading byte of a Unicode character. */
