@@ -1,6 +1,7 @@
+> Note: Work in progress. This is a draft, not a finished spec.
+
 # □ Entofu
 
-(Base524288)
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as [valid](https://www.unicode.org/faq/basic_q.html#12) unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
 
@@ -22,8 +23,6 @@ Put differently, it's a Base524288 encoding that uses Unicode planes 4 to 11 as 
 
 See [src/index.ts](./src/index.ts) for a simple reference implementation of the encoder in only 40 lines of code.
 
-**Status**\
-I've just started the project. The encoder seemingly works, the decoder is unfinished. Tests are needed. Contributions are welcome.
 
 
 ## Efficiency
