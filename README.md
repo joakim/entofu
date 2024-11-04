@@ -88,7 +88,7 @@ Tofu characters contain _3×_ more data than Base64 characters, making it visual
 
 Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
 
-That makes it not suitable for large binaries if _size_ matters, but useful for encoding smaller binary data, such as UUIDs and hashes, where the size is small and _length_ matters.
+That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries, such as UUIDs and hashes, where the size is small and _length_ matters.
 
 ### Actual numbers
 
