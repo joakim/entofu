@@ -25,6 +25,8 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 [![NPM](https://img.shields.io/npm/v/entofu)][npm]
 [![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
 
+This library also serves as the reference implementation of the algorithm (see [mod.ts](./mod.ts)).
+
 ### Status
 
 It's still early days. The algorithm is implemented and working, except noncharacter decoding. After that's done, I'll add a test suite, upgrade the status to alpha and publish a package to npm and jsr.
