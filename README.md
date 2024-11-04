@@ -25,7 +25,7 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 [![NPM](https://img.shields.io/npm/v/entofu)][npm]
 [![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
 
-This library also serves as the reference implementation of the algorithm (see [index.ts](./index.ts)).
+This library also serves as the reference implementation of the algorithm (see [entofu.ts](./entofu.ts)).
 
 ### Status
 
