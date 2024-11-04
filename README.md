@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)
 ![Status](https://img.shields.io/badge/status-draft-ee7263)
 
-A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
+A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
 
 Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace](/assets/unicode-map.png). It lets you embed binary data _inside_ valid UTF-8 text, making tofu omelette without breaking any eggs so to speak. [^1]
 
@@ -22,8 +22,8 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 
 ![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025?color=0fb46e)
-[![NPM](https://img.shields.io/npm/v/entofu)](https://www.npmjs.com/package/entofu)
-[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)](https://jsr.io/@joakim/entofu)
+[![NPM](https://img.shields.io/npm/v/entofu)][npm]
+[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
 
 ### Status
 
@@ -31,7 +31,7 @@ It's still early days. The algorithm is implemented and working, except nonchara
 
 ### Usage
 
-Install [`entofu`](https://www.npmjs.com/package/entofu) from npm or [`@joakim/entofu`](https://jsr.io/@joakim/entofu) from jsr. The code below assumes npm.
+Install [`entofu`][npm] from npm or [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.
 
 ```js
 import { stringify, parse } from 'entofu'
@@ -108,7 +108,7 @@ UUIDs actually represent the worst case, with the last tofu only encoding 2 bits
 
 ## Textual representation
 
-Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). If a font doesn't provide a _missing glyph_, a [fallback font](https://en.wikipedia.org/wiki/Fallback_font) is used. [^3]
+Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu][tofu] – which differs by [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). If a font doesn't provide a _missing glyph_, a [fallback font](https://en.wikipedia.org/wiki/Fallback_font) that does may be used. [^3]
 
 Unlike many base encodings, Entofu does not produce any characters that have special meaning in code or protocols. And unlike the related [Base122][base122], it doesn't produce characters that make selection, keyboard navigation and copy/paste difficult. Tofus are relatively unproblematic.
 
@@ -182,8 +182,11 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 
 [^1]: Yes, it's perfectly [valid](https://www.unicode.org/faq/basic_q.html#12).
-[^2]: Counting [terminal tofus](#self-delimiting-and-padding) and [noncharacter substitutes](#noncharacters).
+[^2]: Counting [terminal tofus](#self-delimiting-padding) and [noncharacter substitutes](#noncharacters).
 [^3]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
+[npm]: https://www.npmjs.com/package/entofu
+[jsr]: https://jsr.io/@joakim/entofu
+[tofu]: https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character
 [uuid]: https://datatracker.ietf.org/doc/html/rfc9562
 [base122]: https://github.com/kevinAlbs/Base122
