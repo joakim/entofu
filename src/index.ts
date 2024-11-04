@@ -26,7 +26,24 @@ const UNICODE_CONTINUATION_BE = 0xbe // 0b10111110
 const UNICODE_PLANE_XF = 0x8f // 0b10001111
 
 /**
+ * Encodes binary data into a tofu string.
+ * @param input – Binary data.
+ * @returns Entofu encoded data as a string.
  */
+export function stringify(input: Uint8Array) {
+  let encoded = entofu(input)
+  return new TextDecoder('utf8').decode(encoded)
+}
+
+/**
+ * Decodes a tofu string into binary data.
+ * @param input - Entofu encoded data as a string.
+ * @returns Binary data.
+ */
+export function parse(input: string) {
+  let encoded = new TextEncoder().encode(input)
+  return detofu(encoded)
+}
 
 /**
  * Encodes binary data into tofu.
