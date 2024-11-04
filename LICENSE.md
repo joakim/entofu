@@ -1,8 +1,8 @@
 # Public Domain
 
-The Entofu algorithm for Base524288/Base262144 is public domain.
+The Entofu algorithm (Base262144) is public domain. The author disclaims copyright to this source code.
 
-The author disclaims copyright to this source code. In place of a legal notice, here's an excerpt from The Idiot by Fyodor Dostoevsky.
+In place of a legal notice, here's an excerpt from The Idiot by Fyodor Dostoevsky.
 
 ---
 
@@ -10,4 +10,4 @@ One bright, sunny day he went into the mountains and wandered about for a long t
 
 He remembered now how he had stretched out his arms into that bright, infinite blue and wept. What had tormented him was that he was a stranger to all this. What was this feast, what was this eternal magnificent celebration to which he had long been drawn, always, since childhood, and in which he could never participate?
 
-Every morning the same bright sun rises; every morning there is a rainbow over the waterfall; every evening the highest snowcapped mountain, there in the distance, at the edge of the sky, burns with a crimson flame; every little fly that buzzes around him in the warm rays of the sun participates in this whole chorus, knows its place, is sure of it, and is unspeakably happy; every little blade of grass grows and is happy! And everything has its path, and everything knows its path, goes with a song and comes back with a song; only he knows nothing, understands nothing, neither people nor sounds; a stranger to all, a castaway.
+Every morning the same bright sun rises; every morning there is a rainbow over the waterfall; every evening the highest snowcapped mountain, there in the distance, at the edge of the sky, is bathed in purple iridescence; every little fly that buzzes around him in the warm rays of the sun participates in this whole chorus, knows its place, is sure of it, and is unspeakably happy; every little blade of grass grows and is happy! And everything has its path, and everything knows its path, goes with a song and comes back with a song; only he knows nothing, understands nothing, neither people nor sounds; a stranger to all, a castaway.
