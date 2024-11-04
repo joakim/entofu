@@ -138,7 +138,7 @@ export function detofu(input: Uint8Array) {
 
     if ((tofu[0] & 0b11111100) !== 0b11110000) throw Error(`Invalid leading byte at ${offset}`)
 
-    // Bytes to skip (if it's a padded terminal tofu)
+    // Bytes to skip (for padded terminal tofus)
     let skip = 0
 
     // Special tofu (terminal/noncharacter)
@@ -151,7 +151,6 @@ export function detofu(input: Uint8Array) {
         } else {
           // Padded terminal tofu
           skip = 1 + (tofu[1] & 1)
-          output = output.subarray(0, -skip)
         }
       }
     }
@@ -174,5 +173,6 @@ export function detofu(input: Uint8Array) {
     }
   }
 
+  // Cap the output to only extracted bytes (may be < outputLength)
   return output.subarray(0, index)
 }
