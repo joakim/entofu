@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
-import { entofu, detofu } from '../src'
-import { parse, stringify } from './uuid'
+import { entofu, detofu } from '../mod.ts'
+import { parse, stringify } from './uuid.ts'
 
 // Who needs a test runner?
 
