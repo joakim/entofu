@@ -70,7 +70,7 @@ Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuat
 | Binary | `11110010` | `10001111` | `10111111` | `10000000` |
 | Mask   | `11110010` | `10______` | `10______` | `10______` |
 
-Tofu characters contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data in storage (memory or disk).
+Tofus contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data in storage (memory or disk).
 
 ### Theoretical numbers
 
@@ -83,7 +83,7 @@ Tofu characters contain _3×_ more data than Base64 characters, making it visual
 
 <sup>I) Ratio between the number of bits in the output and the number of bits in the input, showing inflation in size (lower is better).</sup>\
 <sup>II) The inverse ratio, showing the size efficiency as a percentage (higher is better).</sup>\
-<sup>III) Ratio between the number of bits per byte of input and the number of bits per UTF-8 character of output, measuring the relative difference in length (lower is better).</sup>\
+<sup>III) Ratio between the number of bits per byte of input (8) and the number of data bits per UTF-8 code point of output, measuring the relative difference in length (lower is better).</sup>\
 <sup>IV) The inverse ratio, illustrating the length efficiency as a percentage (higher is better).</sup>
 
 Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
@@ -119,7 +119,7 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 ### Self-delimiting (padding)
 
-The last character of the encoded output is a distinct terminal character that handles padding, making it a self-delimiting encoding. Terminal characters use the unassigned planes 12 and 4-7, above and below the planes used for regular characters (8-11).
+The last tofu of the encoded output is a distinct terminal tofu that handles padding, making it a self-delimiting encoding. Terminal tofus use the unassigned planes 12 and 4-7, above and below the planes used for regular tofus (8-11).
 
 The two least significant bits of the leading byte are used as flags for special tofu (terminal/noncharacter), resulting in the planes used.
 
@@ -163,9 +163,9 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 > The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts at times.
 
-**Can't you up the ante and use Base524288, with 19 bits per character?**
+**Can't you up the ante and use Base524288, with 19 bits per tofu?**
 
-> I tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra character in some cases, as the lead byte can't be used for flags. If these issues were somehow solved, I'd reconsider it as an optional base for Entofu.
+> I tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra tofu in some cases, as the lead byte can't be used for flags. If these issues were somehow solved, I'd reconsider it as an optional base for Entofu.
 
 
 ## Inspiration
