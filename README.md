@@ -1,11 +1,11 @@
 # □ Entofu
 
 [![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)](./LICENSE.md)
-![Status](https://img.shields.io/badge/status-draft-ee7263)
+![Status](https://img.shields.io/badge/status-alpha-ee7263)
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
 
-Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace](/assets/unicode-map.png). It lets you embed binary data _inside_ valid UTF-8 text, making tofu omelette without breaking any eggs so to speak. [^1]
+Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace][unicode-map]. It lets you embed binary data _inside_ valid UTF-8 text, making tofu omelette without breaking any eggs so to speak. [^1]
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
@@ -25,11 +25,11 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 [![NPM](https://img.shields.io/npm/v/entofu)][npm]
 [![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
 
-This library also serves as the reference implementation of the algorithm (see [mod.ts](./mod.ts)).
+This library also serves as the reference implementation of the algorithm (see [index.ts](./index.ts)).
 
 ### Status
 
-It's still early days. The algorithm is implemented and working, except noncharacter decoding. After that's done, I'll add a test suite, upgrade the status to alpha and publish a package to npm and jsr.
+The algorithm is fully implemented and working, although not yet thoroughly tested. I need to write a test suite.
 
 ### Usage
 
@@ -154,7 +154,7 @@ Any substitute code points encountered when decoding must be converted back to t
 - `U+7FFFE` ⟷ `U+D000E`
 - `U+7FFFF` ⟷ `U+D000F`
 
-The code points are converted back and forth by simple bitwise operations, yielding the sequence above.
+The code points are converted back and forth only by bitwise operations, yielding the sequence above.
 
 (The substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign meaning to these code points, they're merly stand-ins for noncharacters by necessity.)
 
@@ -165,7 +165,7 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 > The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts at times.
 
-**Can't you up the ante and use Base524288, with 19 bits per tofu?**
+**Can't you up the ante and use Base524288 with 19 bits per tofu?**
 
 > I tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra tofu in some cases, as the lead byte can't be used for flags. If these issues were somehow solved, I'd reconsider it as an optional base for Entofu.
 
@@ -179,7 +179,7 @@ The code points are converted back and forth by simple bitwise operations, yield
 ## License
 
 - [Public domain](/LICENSE.md)
-- [The Unicode map](/assets/unicode-map.png) is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/) (thanks!)
+- [The Unicode map][unicode-map] is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/) (thanks!)
 
 
 
@@ -192,3 +192,4 @@ The code points are converted back and forth by simple bitwise operations, yield
 [tofu]: https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character
 [uuid]: https://datatracker.ietf.org/doc/html/rfc9562
 [base122]: https://github.com/kevinAlbs/Base122
+[unicode-map]: ./assets/unicode-map.png
