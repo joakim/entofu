@@ -1,6 +1,5 @@
 {
   "name": "entofu",
-  "module": "./mod.ts",
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
