@@ -6,7 +6,7 @@
  * Bit distribution of a tofu: 111100xx 10zzzzzz 10zzzzzz 10zzzzzz
  * - xx = 10: regular tofu (first byte = F2)
  * - xx = 01: special tofu, unpadded terminal tofu (first byte = F1)
- * - xx = 11: special tofu, padded terminal tofu or noncharacter (first byte = F3)
+ * - xx = 11: special tofu, padded terminal tofu or noncharacter substitute tofu (first byte = F3)
  * - z…: data bits
  */
 
@@ -30,7 +30,7 @@ const UNICODE_PLANE_XF = 0x8f // 0b10001111
  * @param input – Binary data.
  * @returns Entofu encoded data as a string.
  */
-export function stringify(input: Uint8Array) {
+export function stringify(input: Uint8Array): string {
   let encoded = entofu(input)
   return new TextDecoder('utf8').decode(encoded)
 }
@@ -40,7 +40,7 @@ export function stringify(input: Uint8Array) {
  * @param input - Entofu encoded data as a string.
  * @returns Binary data.
  */
-export function parse(input: string) {
+export function parse(input: string): Uint8Array {
   let encoded = new TextEncoder().encode(input)
   return detofu(encoded)
 }
@@ -50,7 +50,7 @@ export function parse(input: string) {
  * @param input - Binary data.
  * @returns Entofu encoded data as UTF-8 bytes.
  */
-export function entofu(input: Uint8Array) {
+export function entofu(input: Uint8Array): Uint8Array {
   let bits = input.byteLength * BITS_PER_BYTE
   let length = Math.ceil(bits / BITS_PER_TOFU) * 4 // in tofus
   let output = new Uint8Array(length)
@@ -124,7 +124,7 @@ export function entofu(input: Uint8Array) {
  * @param input - Entofu encoded data as UTF-8 bytes.
  * @returns Binary data.
  */
-export function detofu(input: Uint8Array) {
+export function detofu(input: Uint8Array): Uint8Array {
   let inputLength = input.length / 4 // In tofus
   let outputLength = Math.ceil((inputLength * BITS_PER_TOFU) / BITS_PER_BYTE)
   let output = new Uint8Array(outputLength)
