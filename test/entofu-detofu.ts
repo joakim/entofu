@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { entofu, detofu } from '../mod.ts'
-import { parse, stringify } from './uuid.ts'
+import { parse, stringify } from './utils/uuid.ts'
 
 // Who needs a test runner?
 
@@ -28,6 +28,7 @@ console.log('decoded\t', decoded)
 let uuid2 = stringify(decoded)
 console.log('uuid2\t', uuid2)
 
-console.log(uuid2 === uuid ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m')
+let outcome = uuid2 === uuid ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m'
+console.log(outcome)
 
 // Alright, now that it works I should write some real tests…
