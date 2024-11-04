@@ -1,4 +1,4 @@
-import { entofu, detofu } from '../mod.ts'
+import { entofu, detofu } from '../index.ts'
 
 let data = await Bun.file('./assets/unicode-map.png').bytes()
 let encoded = entofu(data)
