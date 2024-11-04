@@ -29,11 +29,13 @@ This library also serves as the reference implementation of the algorithm (see [
 
 ### Status
 
-The algorithm is fully implemented and working, although not yet thoroughly tested. I need to write a test suite.
+Alpha. The algorithm is fully implemented and seems to work correctly, but has not yet been thoroughly tested.
+
+Note to self: Write a test suite.
 
 ### Usage
 
-Install [`entofu`][npm] from npm or [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.
+Install [`entofu`][npm] from npm, alternatively [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.
 
 ```js
 import { stringify, parse } from 'entofu'

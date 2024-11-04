@@ -1,6 +1,6 @@
 {
   "name": "entofu",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
   "description": "Encodes binary data as valid unassigned Unicode code points, also known as tofu.",
   "keywords": [
     "base",
