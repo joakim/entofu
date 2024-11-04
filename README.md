@@ -1,6 +1,6 @@
 # □ Entofu
 
-![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)
+[![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)](./LICENSE.md)
 ![Status](https://img.shields.io/badge/status-draft-ee7263)
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
@@ -20,7 +20,7 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 
 ## JavaScript library
 
-![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)
+[![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)](./package.json)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025?color=0fb46e)
 [![NPM](https://img.shields.io/npm/v/entofu)][npm]
 [![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
