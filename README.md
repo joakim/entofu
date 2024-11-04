@@ -104,7 +104,7 @@ UUIDs actually represent the worst case, with a padding of 16 unused bits in the
 
 Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character) – which differs by [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). If a font doesn't provide a _missing glyph_, a [fallback font](https://en.wikipedia.org/wiki/Fallback_font) is used. [^3]
 
-Unlike many base encodings, Entofu does not produce any characters that have special meaning in code or protocols. And unlike the related [Base122](#inspiration), it doesn't produce characters that make selection, keyboard navigation and copy/paste difficult. Tofus are relatively unproblematic.
+Unlike many base encodings, Entofu does not produce any characters that have special meaning in code or protocols. And unlike the related [Base122][base122], it doesn't produce characters that make selection, keyboard navigation and copy/paste difficult. Tofus are relatively unproblematic.
 
 That said, they're not exactly typable, and they're only readable if the _missing glyph_ displays some information about the code point. Otherwise it's all tofu.
 
@@ -164,7 +164,7 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 ## Inspiration
 
-- [Base122](https://blog.kevinalbs.com/base122) by Kevin Albertson
+- [Base122][base122] by Kevin Albertson
 - [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64) ("A UTF-8 environment can use non-synchronized continuation bytes as base64: `0b10xxxxxx`")
 
 
@@ -180,3 +180,4 @@ The code points are converted back and forth by simple bitwise operations, yield
 [^3]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
 [uuid]: https://datatracker.ietf.org/doc/html/rfc9562
+[base122]: https://blog.kevinalbs.com/base122
