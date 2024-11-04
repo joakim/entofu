@@ -1,8 +1,11 @@
 # □ Entofu
 
-A self-delimiting [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
+![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)
+![Status](https://img.shields.io/badge/status-draft-ee7263)
 
-Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace](/assets/unicode-map.png). It lets you embed binary data _inside_ valid Unicode text, making tofu omelette without breaking any eggs so to speak. [^1]
+A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
+
+Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace](/assets/unicode-map.png). It lets you embed binary data _inside_ valid UTF-8 text, making tofu omelette without breaking any eggs so to speak. [^1]
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
@@ -17,13 +20,18 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 
 ## JavaScript library
 
+[![NPM](https://img.shields.io/npm/v/entofu)](https://www.npmjs.com/package/entofu)
+[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)](https://jsr.io/@joakim/entofu)
+![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)
+![Maintenance](https://img.shields.io/maintenance/yes/2025?color=0fb46e)
+
 ### Status
 
-It's still early days. Everything is implemented and working, except noncharacter decoding. After that's done, I'll add a test suite.
+It's still early days. The algorithm is implemented and working, except noncharacter decoding. After that's done, I'll add a test suite, upgrade the status to alpha and publish a package to npm and jsr.
 
 ### Usage
 
-Install `entofu` using your package manager of choice.
+Install [`entofu`](https://www.npmjs.com/package/entofu) from npm or [`@joakim/entofu`](https://jsr.io/@joakim/entofu) from jsr. The code below assumes npm.
 
 ```js
 import { stringify, parse } from 'entofu'
@@ -38,9 +46,7 @@ let decoded = parse(encoded)
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 ```
 
-`stringify` and `parse` rely on [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) to convert to and from UTF-8.
-
-To work directly with byte arrays, use the `entofu` and `detofu` functions instead.
+The functions `stringify` and `parse` rely on [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) to convert to and from UTF-8. If the runtime does not support JavaScript's Encoding API, or if you want to work directly with byte arrays, use the `entofu` and `detofu` functions instead.
 
 ```js
 import { entofu, detofu } from 'entofu'
