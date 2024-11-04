@@ -70,7 +70,7 @@ Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuat
 | Binary | `11110010` | `10001111` | `10111111` | `10000000` |
 | Mask   | `11110010` | `10______` | `10______` | `10______` |
 
-Tofu characters contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data (bytes in memory or on disk).
+Tofu characters contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data in storage (memory or disk).
 
 ### Theoretical numbers
 
