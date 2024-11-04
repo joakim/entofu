@@ -180,4 +180,4 @@ The code points are converted back and forth by simple bitwise operations, yield
 [^3]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
 [uuid]: https://datatracker.ietf.org/doc/html/rfc9562
-[base122]: https://blog.kevinalbs.com/base122
+[base122]: https://github.com/kevinAlbs/Base122
