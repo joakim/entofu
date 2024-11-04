@@ -1,4 +1,5 @@
 {
   "name": "@joakim/entofu",
-  "version": "0.1.0",
-}  "exports": "./entofu.ts"
+  "version": "1.0.0-alpha",
+  "exports": "./entofu.ts"
+}

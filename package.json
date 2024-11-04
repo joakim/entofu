@@ -1,6 +1,35 @@
 {
   "name": "entofu",
+  "version": "1.0.0-alpha",
+  "description": "Encodes binary data as valid unassigned Unicode code points, also known as tofu.",
+  "keywords": [
+    "base",
+    "tofu",
+    "unicode",
+    "utf8",
+    "encoding",
+    "decoding",
+    "base262144"
+  ],
+  "author": "Joakim Stai",
+  "homepage": "https://github.com/joakim/entofu#readme",
+  "bugs": "https://github.com/joakim/entofu/issues",
   "type": "module",
+  "sideEffects": false,
+  "main": "./dist/entofu.js",
+  "module": "./dist/entofu.mjs",
+  "types": "./dist/entofu.d.ts",
+  "files": [
+    "./entofu.ts",
+    "./dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joakim/entofu.git"
+  },
+  "scripts": {
+    "build": "tsc && bun build entofu.ts --outfile=dist/entofu.mjs"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/bun": "latest",
