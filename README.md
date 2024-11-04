@@ -88,13 +88,13 @@ Tofu characters contain _3×_ more data than Base64 characters, making it visual
 
 Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
 
-That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries like UUIDs and hashes, where the size is small and _length_ matters.
+That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries like UUIDs and hashes, where _length_ matters.
 
 ### Actual numbers
 
-The larger the binary, or the less padding is required, the higher the size efficiency, approaching the theoretical 1.777 × the input's size.
+The larger the binary, or the less padding is required, the higher the size efficiency of the output, approaching the theoretical 1.777× increase in size.
 
-UUIDs actually represent the worst case, with a padding of 16 unused bits in the last tofu. It is still smaller in size than the typical UUID. In length, it is by far the shortest encoding.
+UUIDs actually represent the worst case, with the last tofu only encoding 2 bits. It is still smaller in size than the typical UUID string. In length, it is by far the shortest encoding.
 
 | Encoding         | Output                               | Length    | Size               |
 | ---------------- | ------------------------------------ | --------- | ------------------ |
@@ -117,9 +117,9 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 ## Particularities
 
-### Self-delimiting and padding
+### Self-delimiting (padding)
 
-The last character of the encoded output is a distinct terminal character that handles padding, making it a self-delimiting encoding. Terminal characters use the unassigned planes above (12) and below (4-7) the planes used for regular characters (8-11).
+The last character of the encoded output is a distinct terminal character that handles padding, making it a self-delimiting encoding. Terminal characters use the unassigned planes 12 and 4-7, above and below the planes used for regular characters (8-11).
 
 The two least significant bits of the leading byte are used as flags for special tofu (terminal/noncharacter), resulting in the planes used.
 
@@ -128,7 +128,7 @@ The two least significant bits of the leading byte are used as flags for special
 
 Unicode reserves the last two code points of each plane as [noncharacters](https://www.unicode.org/faq/private_use.html#noncharacters) intended for internal use.
 
-Any noncharacters produced when encoding must therefore be converted to substitute code points in plane 12.
+Any noncharacters produced when encoding must therefore be converted to substitute code points in plane 13.
 
 Any substitute code points encountered when decoding must be converted back to their respective noncharacters before reading their binary data.
 
@@ -161,11 +161,11 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 **Is it future proof?**
 
-> Some day, some of the tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side, so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts now and then.
+> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts every now and then.
 
 **Can't you up the ante and use Base524288, with 19 bits per character?**
 
-> Tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra character in some cases. If these issues were solved, I'd be happy to reconsider it.
+> I tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra character in some cases, as the lead byte can't be used for flags. If these issues were somehow solved, I'd reconsider it as an optional base for Entofu.
 
 
 ## Inspiration
