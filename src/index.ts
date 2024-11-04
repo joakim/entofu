@@ -1,82 +1,102 @@
 /**
- * Reference implementation of the Entofu algorithm for Base524288/Base262144.
+ * Reference implementation of the Entofu algorithm (Base262144).
  *
- * On Base262144:
- * It is arguably cleaner, with only 3 x 6 bits, but objectively not as
- * efficient as using all 19 bits and 8 Unicode planes. It should however be
- * easier to implement, and more amenable to optimization by borrowing tricks
- * from Base64 libraries. I have therefore included it as an option.
+ * The encoding produces valid unassigned 4-byte Unicode characters (tofus).
  *
- * Base262144 produces at least one tofu more. If length is of importance,
- * stick to Base524288. Note that because they use the same code and occupy the
- * same Unicode planes, they can be indistinguishable, but not interchangeable.
+ * Bit distribution of a tofu: 111100xx 10zzzzzz 10zzzzzz 10zzzzzz
+ * - xx = 10: regular tofu (first byte = F2)
+ * - xx = 01: special tofu, unpadded terminal tofu (first byte = F1)
+ * - xx = 11: special tofu, padded terminal tofu or noncharacter (first byte = F3)
+ * - z…: data bits
  */
 
-/** Leading byte of a Unicode character. */
-const UNICODE_LEADING_MASK = 0xf0 // 0b11110000
+const BITS_PER_BYTE = 8
+const BITS_PER_TOFU = 18
 
-/** Continuation byte of a Unicode character. */
-const UNICODE_CONTINUATION_MASK = 0x80 // 0b10000000
+const UNICODE_LEAD_REGULAR = 0xf2 // 0b11110010
+const UNICODE_LEAD_TERMINAL = 0xf1 // 0b11110001
+const UNICODE_LEAD_TERMINAL_PADDED = 0xf3 // 0b11110011
+const UNICODE_LEAD_NONCHAR = 0xf3
 
-/** Continuation byte BF. */
+const UNICODE_CONTINUATION = 0x80 // 0b10000000
 const UNICODE_CONTINUATION_BF = 0xbf // 0b10111111
-
-/** Continuation byte BE. */
 const UNICODE_CONTINUATION_BE = 0xbe // 0b10111110
 
-/** Matches …F of the second byte. */
-const UNICODE_PLANE_MASK = 0x8f // 0b10001111
+/** Matches _F of the second byte, not just 8F. */
+const UNICODE_PLANE_XF = 0x8f // 0b10001111
 
 /**
- * Encodes binary data into Unicode tofu.
- *
- * @param input - Binary data as a byte array.
- * @param base262144 - Encode using 18 bits per character instead of 19 (don't).
- * @returns Unicode tofu as a byte array.
  */
-export function entofu(input: Uint8Array, base262144 = false) {
-  let bits = base262144 ? 18 : 19
-  let length = Math.ceil((input.byteLength * 8) / bits) * 4
+
+/**
+ * Encodes binary data into tofu.
+ * @param input - Binary data.
+ * @returns Entofu encoded data as UTF-8 bytes.
+ */
+export function entofu(input: Uint8Array) {
+  let bits = input.byteLength * BITS_PER_BYTE
+  let length = Math.ceil(bits / BITS_PER_TOFU) * 4 // in tofus
   let output = new Uint8Array(length)
 
-  // Current bit in the input byte array.
-  let cursor = 0
+  let index = 0
+  let buffer = 0
+  let count = 0
 
-  /** Reads one bit from the input. */
-  function readOne() {
-    const offset = Math.floor(cursor / 8)
-    const shift = 7 - (cursor % 8)
-    cursor += 1
-    return (input[offset] >> shift) & 1
-  }
-
-  /** Reads the specified number of bits from the input. */
-  function read(n: number) {
-    let i: number
-    let value = 0
-    for (i = 0; i < n; i += 1) {
-      value = (value << 1) | readOne()
-    }
-    return value
-  }
-
-  // Encode the binary 4 bytes at a time, tofu by tofu.
   for (let offset = 0; offset < length; offset += 4) {
-    const bytes = new Uint8Array(4)
+    let tofu = new Uint8Array(4)
+    tofu[0] = UNICODE_LEAD_REGULAR
 
-    bytes[0] = (base262144 || readOne() ? 0b01 : 0b10) | UNICODE_LEADING_MASK
-    bytes[1] = read(6) | UNICODE_CONTINUATION_MASK
-    bytes[2] = read(6) | UNICODE_CONTINUATION_MASK
-    bytes[3] = read(6) | UNICODE_CONTINUATION_MASK
+    for (let byte = 1; byte <= 3; byte++) {
+      // Fill the bit buffer from the input
+      if (count < 6) {
+        buffer = (buffer << BITS_PER_BYTE) | input[index++]
+        count += BITS_PER_BYTE
+      }
 
-    // If a sneaky noncharacter is produced, transform it into a special substitute tofu.
-    if (isNoncharacter(bytes)) {
-      bytes[2] = bytes[1]
-      bytes[1] = ((bytes[0] >> 1) & 1) | UNICODE_CONTINUATION_MASK
-      bytes[0] = 0b11 | UNICODE_LEADING_MASK
+      // Extract 6 bits for the tofu
+      if (count >= 6) {
+        tofu[byte] = UNICODE_CONTINUATION | (buffer >> (count - 6))
+        buffer &= (1 << (count - 6)) - 1
+        count -= 6
+      }
     }
 
-    output.set(bytes, offset)
+    // Handle terminal tofu and padding
+    if (offset + 4 === length) {
+      tofu[0] = UNICODE_LEAD_TERMINAL
+
+      let remainder = bits % BITS_PER_TOFU
+      if (remainder && remainder < 12) {
+        tofu[0] = UNICODE_LEAD_TERMINAL_PADDED
+
+        if (remainder < 6) {
+          tofu[3] = tofu[1]
+          tofu[2] = UNICODE_CONTINUATION
+          tofu[1] = UNICODE_CONTINUATION | 0b1
+        } else {
+          tofu[3] = tofu[2]
+          tofu[2] = tofu[1]
+          tofu[1] = UNICODE_CONTINUATION
+        }
+      }
+    }
+
+    // Handle noncharacter
+    if (
+      tofu[2] === UNICODE_CONTINUATION_BF &&
+      (tofu[3] === UNICODE_CONTINUATION_BF || tofu[3] === UNICODE_CONTINUATION_BE) &&
+      (tofu[1] & UNICODE_PLANE_XF) === UNICODE_PLANE_XF
+    ) {
+      let special = tofu[0] & 1
+      let plane = (tofu[1] & 0b110000) >> 4
+      let noncharacter = tofu[3] & 1
+      tofu[3] = noncharacter | (plane << 1) | (special << 3)
+      tofu[2] = UNICODE_CONTINUATION
+      tofu[1] = UNICODE_CONTINUATION | 0b10000 // 90
+      tofu[0] = UNICODE_LEAD_NONCHAR
+    }
+
+    output.set(tofu, offset)
   }
 
   return output
