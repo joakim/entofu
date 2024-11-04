@@ -29,7 +29,7 @@ const UNICODE_PLANE_XF = 0x8f // 0b10001111
 
 /**
  * Encodes binary data into a tofu string.
- * @param input – Binary data.
+ * @param input Binary data.
  * @returns Entofu encoded data as a string.
  */
 export function stringify(input: Uint8Array): string {
@@ -39,7 +39,7 @@ export function stringify(input: Uint8Array): string {
 
 /**
  * Decodes a tofu string into binary data.
- * @param input - Entofu encoded data as a string.
+ * @param input Entofu encoded data as a string.
  * @returns Binary data.
  */
 export function parse(input: string): Uint8Array {
@@ -49,7 +49,7 @@ export function parse(input: string): Uint8Array {
 
 /**
  * Encodes binary data into tofu.
- * @param input - Binary data.
+ * @param input Binary data.
  * @returns Entofu encoded data as UTF-8 bytes.
  */
 export function entofu(input: Uint8Array): Uint8Array {
@@ -123,7 +123,7 @@ export function entofu(input: Uint8Array): Uint8Array {
 
 /**
  * Decodes tofu into binary data.
- * @param input - Entofu encoded data as UTF-8 bytes.
+ * @param input Entofu encoded data as UTF-8 bytes.
  * @returns Binary data.
  */
 export function detofu(input: Uint8Array): Uint8Array {
