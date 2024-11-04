@@ -20,10 +20,10 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 
 ## JavaScript library
 
-[![NPM](https://img.shields.io/npm/v/entofu)](https://www.npmjs.com/package/entofu)
-[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)](https://jsr.io/@joakim/entofu)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025?color=0fb46e)
+[![NPM](https://img.shields.io/npm/v/entofu)](https://www.npmjs.com/package/entofu)
+[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)](https://jsr.io/@joakim/entofu)
 
 ### Status
 
@@ -46,7 +46,7 @@ let decoded = parse(encoded)
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 ```
 
-The functions `stringify` and `parse` rely on [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) to convert to and from UTF-8. If the runtime does not support JavaScript's Encoding API, or if you want to work directly with byte arrays, use the `entofu` and `detofu` functions instead.
+The functions `stringify` and `parse` rely on JavaScript's widely supported [Encoding API](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API) to convert to and from UTF-8. If the JavaScript runtime does not support [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder), or you want to work directly with byte arrays, use the `entofu` and `detofu` functions instead.
 
 ```js
 import { entofu, detofu } from 'entofu'
