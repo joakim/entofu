@@ -161,7 +161,7 @@ The code points are converted back and forth by simple bitwise operations, yield
 
 **Is it future proof?**
 
-> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts every now and then.
+> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts at times.
 
 **Can't you up the ante and use Base524288, with 19 bits per character?**
 
