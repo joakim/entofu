@@ -1,7 +1,5 @@
 # □ Entofu
 
-A binary-to-text encoding that encodes binary data as valid unassigned Unicode code points, also known as tofu.
-
 A self-delimiting [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu](https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character).
 
 Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace](/assets/unicode-map.png). It lets you embed binary data _inside_ valid Unicode text, making tofu omelette without breaking any eggs so to speak. [^1]
