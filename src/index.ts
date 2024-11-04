@@ -103,29 +103,59 @@ export function entofu(input: Uint8Array) {
 }
 
 /**
- * Decodes Unicode tofu into binary data.
- *
- * @param input - Unicode tofu as a byte array.
- * @param base262144 - Decode using 18 bits per character instead of 19.
- * @returns Binary data as a byte array.
+ * Decodes tofu into binary data.
+ * @param input - Entofu encoded data as UTF-8 bytes.
+ * @returns Binary data.
  */
-export function detofu(input: Uint8Array, base262144 = false) {
-  let bits = base262144 ? 18 : 19
-  let output = new Uint8Array()
+export function detofu(input: Uint8Array) {
+  let inputLength = input.length / 4 // In tofus
+  let outputLength = Math.ceil((inputLength * BITS_PER_TOFU) / BITS_PER_BYTE)
+  let output = new Uint8Array(outputLength)
 
-  let length = input.length
-  for (let offset = 0; offset < length; offset += 4) {
-    // @todo it
+  let index = 0
+  let buffer = 0
+  let count = 0
+
+  for (let offset = 0; offset < input.length; offset += 4) {
+    let tofu = input.subarray(offset, offset + 4)
+
+    if ((tofu[0] & 0b11111100) !== 0b11110000) throw Error(`Invalid leading byte at ${offset}`)
+
+    // Bytes to skip (if it's a padded terminal tofu)
+    let skip = 0
+
+    // Special tofu (terminal/noncharacter)
+    if ((tofu[0] & 1) === 1) {
+      // Padded/noncharacter
+      if (((tofu[0] >> 1) & 1) === 1) {
+        if (tofu[1] === 0x90) {
+          // Noncharacter
+          // @todo: Handle noncharacter
+        } else {
+          // Padded terminal tofu
+          skip = 1 + (tofu[1] & 1)
+          output = output.subarray(0, -skip)
+        }
+      }
+    }
+
+    for (let byte = 1 + skip; byte <= 3; byte++) {
+      if ((tofu[byte] & 0b11000000) !== 0b10000000)
+        throw Error(`Invalid continuation byte at ${offset + byte}`)
+
+      // Fill the bit buffer from the tofu byte's data
+      let bits = tofu[byte] & 0b111111
+      buffer = (buffer << 6) | bits
+      count += 6
+
+      // Extract bytes as they become available
+      while (count >= 8) {
+        let data = (buffer >> (count - 8)) & 0xff
+        output[index++] = data
+        count -= 8
+      }
+    }
   }
 
-  return output
-}
-
-/** Checks whether a Unicode character is in fact not a character. */
-function isNoncharacter(bytes: Uint8Array | number[]) {
-  return (
-    (bytes[3] === UNICODE_CONTINUATION_BF || bytes[3] === UNICODE_CONTINUATION_BE) &&
-    bytes[2] === UNICODE_CONTINUATION_BF &&
-    (bytes[1] & UNICODE_PLANE_MASK) === UNICODE_PLANE_MASK
-  )
+  return output.subarray(0, index)
 }
