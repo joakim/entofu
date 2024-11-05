@@ -5,11 +5,11 @@
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
 
-Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace][unicode-map]. It lets you embed binary data _inside_ valid Unicode text, making tofu omelette without breaking any eggs so to speak. [^1]
+Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace][unicode-map]. It lets you embed binary data inside valid Unicode text, making tofu omelette without breaking any eggs so to speak. [^1]
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
-It is less [efficient](#efficiency) but much shorter in length than common encodings like Base32, Base64 and Base85.
+It is less [efficient](#efficiency) but much shorter (and better looking) than common encodings like Base32, Base64 and Base85.
 
 | Bits | Output                        | Length | Size in UTF-8      |
 | ---- | ----------------------------- | ------ | ------------------ |
@@ -165,19 +165,17 @@ The code points are converted back and forth by bitwise operations, yielding the
 
 > Planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/) as of 2024. But some day, some tofus will inevitably be assigned a character and cease to be tofu. Any whitespace characters, combining characters, format characters or control characters would be problematic, as would normalization (see [qntm's excellent explanation](https://qntm.org/safe)).
 >
-> That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year (since 2014), so Entofu should be usable for quite some time into the future. But because I can't predict the future I can't offer any guarantees.
+> That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year (since 2014), so Entofu should be usable for quite some time into the future.
 >
-> If the time horizon is years, not several decades, or if it's only for display purposes, I'd be fine with using Entofu.
->
-> If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead.
+> But because I can't predict the future, I can't offer any guarantees. If the time horizon is years, not several decades, or if it's only for display purposes, I'd be fine with using Entofu. If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead.
 
 **Why did you make an encoding that's less size efficient than Base64?**
 
-> Because size efficiency isn't the only metric. Visual length and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, it's size is better than hexadecimal and the standard UUID text format.
+> Because size efficiency isn't the only metric. Length, appearance and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, its size efficiency is better than hexadecimal and the standard UUID text format.
 
 **Shouldn't an encoding use readable and typable characters?**
 
-> How often do you read or write hashes by hand? Unless a paper backup is required, I think it's more important that the encoding be easy to copy/paste and use in various contexts. That and the short length are the strengths of this encoding.
+> How often do you read or write hashes by hand? Unless a paper backup is required, I think it's more important that the encoding be easy to copy/paste and use in various contexts. That and the short length are the strengths of this encoding. And the name.
 
 **Can't you up the ante and use Base524288 with 19 bits per tofu?**
 
@@ -189,7 +187,7 @@ The code points are converted back and forth by bitwise operations, yielding the
 - [Base122][base122] by Kevin Albertson
 - [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64) ("A UTF-8 environment can use non-synchronized continuation bytes as base64: `0b10xxxxxx`")
 
-I was not aware of [Base65536][base65536] and [Base32768][base32768] until after having made this, but I think they're brilliant.
+I was not aware of [Base65536][base65536] and [Base32768][base32768] until after having made this, but I think they're brilliant if you need a future-proof encoding and looks doesn't matter. Especially Base32768 if all you have is UTF-16.
 
 
 ## License
