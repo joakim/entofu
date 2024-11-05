@@ -1,7 +1,7 @@
 # □ Entofu
 
 [![License](https://img.shields.io/badge/license-public_domain-green?color=0fb46e)](./LICENSE.md)
-![Status](https://img.shields.io/badge/status-alpha-ee7263)
+![Status](https://img.shields.io/badge/status-alpha-orange)
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
 
