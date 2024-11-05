@@ -163,17 +163,17 @@ The code points are converted back and forth by bitwise operations, yielding the
 
 **Is it future-proof?**
 
-> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/) as of 2024. But some day, some tofus will inevitably be assigned a character and cease to be tofu. Any whitespace characters, combining characters, format characters or control characters would be problematic, as would normalization (see [this excellent explanation](https://qntm.org/safe)).
+> Planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/) as of 2024. But some day, some tofus will inevitably be assigned a character and cease to be tofu. Any whitespace characters, combining characters, format characters or control characters would be problematic, as would normalization (see [qntm's excellent explanation](https://qntm.org/safe)).
 >
-> That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year, so Entofu should be safe for quite some time into the future.
+> That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year (since 2014), so Entofu should be usable for quite some time into the future. But because I can't predict the future I can't offer any guarantees.
 >
-> If the time horizon is years, not decades, or if it's only for display purposes and can be easily swapped out, I'd be fine using Entofu.
+> If the time horizon is years, not several decades, or if it's only for display purposes, I'd be fine with using Entofu.
 >
 > If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead.
 
 **Why did you make an encoding that's less size efficient than Base64?**
 
-> Because size efficiency isn't the only metric. Visual length and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, it's size is better than hexadecimal and the standard text format for UUIDs.
+> Because size efficiency isn't the only metric. Visual length and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, it's size is better than hexadecimal and the standard UUID text format.
 
 **Shouldn't an encoding use readable and typable characters?**
 
