@@ -3,12 +3,16 @@
   "version": "1.0.0-alpha.1",
   "description": "Encodes binary data as valid unassigned Unicode code points, also known as tofu.",
   "keywords": [
-    "base",
     "tofu",
     "unicode",
     "utf8",
+    "binary",
+    "text",
     "encoding",
     "decoding",
+    "detofu",
+    "base",
+    "262144",
     "base262144"
   ],
   "author": "Joakim Stai",
