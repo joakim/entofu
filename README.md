@@ -171,7 +171,7 @@ The code points are converted back and forth by bitwise operations, yielding the
 
 **Why did you make an encoding that's less size efficient than Base64?**
 
-> Because size efficiency isn't the only metric. Length, appearance and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, its size efficiency is better than hexadecimal and the standard UUID text format.
+> Because size efficiency isn't the only metric. Length, appearance and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, the size efficiency isn't all that bad, it's better than hexadecimal and the standard UUID text format.
 
 **Shouldn't an encoding use readable and typable characters?**
 
