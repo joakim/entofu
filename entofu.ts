@@ -18,13 +18,12 @@ const UNICODE_LEAD_REGULAR = 0xf2 // 0b11110010
 const UNICODE_LEAD_TERMINAL = 0xf1 // 0b11110001
 const UNICODE_LEAD_TERMINAL_PADDED = 0xf3 // 0b11110011
 const UNICODE_LEAD_NONCHAR = 0xf3 // 0b11110011
-
 const UNICODE_CONTINUATION = 0x80 // 0b10000000
-const UNICODE_CONTINUATION_BF = 0xbf // 0b10111111
+/** As a mask, matches both BE and BF. */
 const UNICODE_CONTINUATION_BE = 0xbe // 0b10111110
-const UNICODE_CONTINUATION_NONCHAR = 0x90 // 0b10000000
-
-/** Matches _F of the second byte, not just 8F. */
+const UNICODE_CONTINUATION_BF = 0xbf // 0b10111111
+const UNICODE_PLANE_NONCHAR = 0x90 // 0b10010000
+/** As a mask, matches _F of the second byte, not just 8F. */
 const UNICODE_PLANE_XF = 0x8f // 0b10001111
 
 /**
@@ -72,7 +71,7 @@ export function entofu(input: Uint8Array): Uint8Array {
         count += BITS_PER_BYTE
       }
 
-      // Extract 6 bits for the tofu
+      // Extract 6 bits for the tofu as they become available
       if (count >= 6) {
         tofu[byte] = UNICODE_CONTINUATION | (buffer >> (count - 6))
         buffer &= (1 << (count - 6)) - 1
@@ -102,15 +101,15 @@ export function entofu(input: Uint8Array): Uint8Array {
 
     // Handle noncharacter
     if (
-      tofu[2] === UNICODE_CONTINUATION_BF &&
-      (tofu[3] === UNICODE_CONTINUATION_BF || tofu[3] === UNICODE_CONTINUATION_BE) &&
+      (tofu[2] === UNICODE_CONTINUATION_BF) &&
+      (tofu[3] & UNICODE_CONTINUATION_BE) === UNICODE_CONTINUATION_BE &&
       (tofu[1] & UNICODE_PLANE_XF) === UNICODE_PLANE_XF
     ) {
       let special = tofu[0] & 1
       let plane = (tofu[1] & 0b110000) >> 4
       let noncharacter = tofu[3] & 1
       tofu[0] = UNICODE_LEAD_NONCHAR
-      tofu[1] = UNICODE_CONTINUATION_NONCHAR
+      tofu[1] = UNICODE_PLANE_NONCHAR
       tofu[2] = UNICODE_CONTINUATION
       tofu[3] = UNICODE_CONTINUATION | noncharacter | (plane << 1) | (special << 3)
     }
@@ -146,8 +145,8 @@ export function detofu(input: Uint8Array): Uint8Array {
     if ((tofu[0] & 1) === 1) {
       // Padded/noncharacter
       if (((tofu[0] >> 1) & 1) === 1) {
-        if (tofu[1] === UNICODE_CONTINUATION_NONCHAR) {
-          // Noncharacter
+        // Noncharacter
+        if (tofu[1] === UNICODE_PLANE_NONCHAR) {
           let noncharacter = tofu[3] & 1
           let plane = (tofu[3] >> 1) & 0b11
           let special = (tofu[3] >> 3) & 1
@@ -165,6 +164,8 @@ export function detofu(input: Uint8Array): Uint8Array {
     for (let byte = 1 + skip; byte <= 3; byte++) {
       if ((tofu[byte] & 0b11000000) !== UNICODE_CONTINUATION)
         throw Error(`Invalid continuation byte at ${offset + byte}`)
+
+      // @todo Ignore/throw on actual noncharacters?
 
       // Fill the bit buffer from the tofu byte's data
       let bits = tofu[byte] & 0b111111
