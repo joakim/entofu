@@ -187,7 +187,7 @@ The code points are converted back and forth by bitwise operations, yielding the
 - [Base122][base122] by Kevin Albertson
 - [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64) ("A UTF-8 environment can use non-synchronized continuation bytes as base64: `0b10xxxxxx`")
 
-I was not aware of [Base65536][base65536] and [Base32768][base32768] until after having made this, but I think they're brilliant if you need a future-proof encoding and looks doesn't matter. Especially Base32768 if all you have is UTF-16.
+I was not aware of [Base65536][base65536] and [Base32768][base32768] until after having made this, but I think they're brilliant if you need a future-proof encoding that looks like gibberish. Especially Base32768 if all you have is UTF-16.
 
 
 ## License
