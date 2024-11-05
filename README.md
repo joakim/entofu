@@ -5,13 +5,13 @@
 
 A [binary-to-text encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding) that encodes binary data as unassigned Unicode code points, also known as [tofu][tofu].
 
-Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace][unicode-map]. It lets you embed binary data _inside_ valid UTF-8 text, making tofu omelette without breaking any eggs so to speak. [^1]
+Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the empty planes in the middle of [the vast Unicode codespace][unicode-map]. It lets you embed binary data _inside_ valid Unicode text, making tofu omelette without breaking any eggs so to speak. [^1]
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
-It is much shorter in length than common base encodings like Base32, Base64 and Base85.
+It is less [efficient](#efficiency) but much shorter in length than common encodings like Base32, Base64 and Base85.
 
-| Bits | Output                        | Length | Size               |
+| Bits | Output                        | Length | Size in UTF-8      |
 | ---- | ----------------------------- | ------ | ------------------ |
 | 128  | 򀂘򡶢򝁉򛣤򋡷򱻧򑬍󁀐                      | 8      | 256 bits (2×)      |
 | 256  | 򡙘򾧙򸁠򒗤򓮨򩻑򊰟򂌦򊻑򛽈򾝦򈖮򯴐򄻱󁀔               | 15     | 480 bits (1.875×)  |
@@ -23,19 +23,19 @@ It is much shorter in length than common base encodings like Base32, Base64 and 
 [![Dependencies](https://img.shields.io/badge/dependencies-none-0fb46e)](./package.json)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025?color=0fb46e)
 [![NPM](https://img.shields.io/npm/v/entofu)][npm]
-[![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr]
+<!-- [![JSR](https://img.shields.io/jsr/v/%40joakim/entofu)][jsr] -->
 
 This library also serves as the reference implementation of the algorithm (see [entofu.ts](./entofu.ts)).
 
 ### Status
 
-Alpha. The algorithm is fully implemented and seems to work correctly, but has not yet been thoroughly tested.
+Alpha. The algorithm is fully implemented and seems to be correct, but has not yet been thoroughly tested.
 
-Note to self: Write a test suite.
+Next: Write a test suite.
 
 ### Usage
 
-Install [`entofu`][npm] from npm, alternatively [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.
+Install [`entofu`][npm] using your package manager of choice.<!--from npm, alternatively [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.-->
 
 ```js
 import { stringify, parse } from 'entofu'
@@ -76,31 +76,29 @@ Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuat
 
 Tofus contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data in storage (memory or disk).
 
+That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries like UUIDs and hashes, where _length_ matters.
+
 ### Theoretical numbers
-
-|                                 | Base8 | Base16 | Base32 | Base64 | Base262144 (Entofu) |
-| ------------------------------- | ----- | ------ | ------ | ------ | ------------------- |
-| Size <sup>I</sup>               | 1×    | 2×     | 1.6×   | 1.333× | 1.777×              |
-| Size efficiency <sup>II</sup>   | 100%  | 50%    | 62.5%  | 75% ★  | 56.25%              |
-| Length <sup>III</sup>           | 1×    | 2×     | 1.6×   | 1.333× | 0.444×              |
-| Length efficiency <sup>IV</sup> | 100%  | 50%    | 62.5%  | 75%    | 225% ★              |
-
-<sup>I) Ratio between the number of bits in the output and the number of bits in the input, showing inflation in size (lower is better).</sup>\
-<sup>II) The inverse ratio, showing the size efficiency as a percentage (higher is better).</sup>\
-<sup>III) Ratio between the number of bits per byte of input (8) and the number of data bits per UTF-8 code point of output, measuring the relative difference in length (lower is better).</sup>\
-<sup>IV) The inverse ratio, illustrating the length efficiency as a percentage (higher is better).</sup>
 
 Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
 
-That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries like UUIDs and hashes, where _length_ matters.
+|                                 | Base8 | Base16 | Base32 | Base64 | Base262144 (Entofu) |
+| ------------------------------- | ----- | ------ | ------ | ------ | ------------------- |
+| Size <sup>Ⅰ</sup>               | 1×    | 2×     | 1.6×   | 1.333× | 1.777×              |
+| Size efficiency <sup>Ⅱ</sup>   | 100%  | 50%    | 62.5%  | 75% ★  | 56.25%              |
+| Length <sup>Ⅲ</sup>           | 1×    | 2×     | 1.6×   | 1.333× | 0.444×              |
+| Length efficiency <sup>Ⅳ</sup> | 100%  | 50%    | 62.5%  | 75%    | 225% ★              |
+
+<sup>Ⅰ) Ratio between output bits and input bits, showing inflation in size (lower is better).</sup>\
+<sup>Ⅱ) The inverse ratio, showing the size efficiency as a percentage (higher is better).</sup>\
+<sup>Ⅲ) Ratio between bits per input byte (8) and data bits per output code point, measuring the difference in length (lower is better).</sup>\
+<sup>Ⅳ) The inverse ratio, illustrating the length efficiency as a percentage (higher is better).</sup>
 
 ### Actual numbers
 
-The larger the binary, or the less padding is required, the higher the size efficiency of the output, approaching the theoretical 1.777× increase in size.
-
 UUIDs actually represent the worst case, with the last tofu only encoding 2 bits. It is still smaller in size than the typical UUID string. In length, it is by far the shortest encoding.
 
-| Encoding         | Output                               | Length    | Size               |
+| Encoding         | Output                               | Length    | Size in UTF-8      |
 | ---------------- | ------------------------------------ | --------- | ------------------ |
 | [RFC 9562][uuid] | 90f119cf-9fc4-4090-acc1-0000bc711dc3 | 36 chars  | 288 bits (2.25×)   |
 | Base16           | 90f119cf9fc44090acc10000bc711dc3     | 32 chars  | 256 bits (2×)      |
@@ -125,7 +123,7 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 The last tofu of the encoded output is a distinct terminal tofu that handles padding, making it a self-delimiting encoding. Terminal tofus use the unassigned planes 12 and 4-7, above and below the planes used for regular tofus (8-11).
 
-The two least significant bits of the leading byte are used as flags for special tofu (terminal/noncharacter), resulting in the planes used.
+The two least significant bits of the leading byte are used as flags for the type of tofu (regular/terminal/noncharacter), resulting in the planes used.
 
 
 ### Noncharacters
@@ -134,7 +132,7 @@ Unicode reserves the last two code points of each plane as [noncharacters](https
 
 Any noncharacters produced when encoding must therefore be converted to substitute code points in plane 13.
 
-Any substitute code points encountered when decoding must be converted back to their respective noncharacters before reading their binary data.
+When decoding, any substitute code points must be converted back to their respective noncharacters before reading their binary data.
 
 8 noncharacters in regular tofus:
 - `U+8FFFE` ⟷ `U+D0000`
@@ -156,26 +154,42 @@ Any substitute code points encountered when decoding must be converted back to t
 - `U+7FFFE` ⟷ `U+D000E`
 - `U+7FFFF` ⟷ `U+D000F`
 
-The code points are converted back and forth only by bitwise operations, yielding the sequence above.
+The code points are converted back and forth by bitwise operations, yielding the sequence above.
 
-(The substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign meaning to these code points, they're merly stand-ins for noncharacters by necessity.)
+(These substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign any meaning, they're merly stand-ins for noncharacters by necessity, as the upper planes include the Special-purpose and Private Use Area planes that may not be used.)
 
 
 ## Rarely Asked Questions
 
-**Is it future proof?**
+**Is it future-proof?**
 
-> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/). But some day, some tofus will inevitably be assigned a character and cease to be tofu. The tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13), so this should be quite some time in the future. Even then, it should still be a valid encoding, producing some random characters from obscure scripts at times.
+> The planes 4-13 are not on any [Unicode roadmaps](https://unicode.org/roadmaps/) as of 2024. But some day, some tofus will inevitably be assigned a character and cease to be tofu. Any whitespace characters, combining characters, format characters or control characters would be problematic, as would normalization (see [this excellent explanation](https://qntm.org/safe)).
+>
+> That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year, so Entofu should be safe for quite some time into the future.
+>
+> If the time horizon is years, not decades, or if it's only for display purposes and can be easily swapped out, I'd be fine using Entofu.
+>
+> If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead.
+
+**Why did you make an encoding that's less size efficient than Base64?**
+
+> Because size efficiency isn't the only metric. Visual length and ease of use can be just as important, if not more important. Storage is cheap, screen estate is not. Still, it's size is better than hexadecimal and the standard text format for UUIDs.
+
+**Shouldn't an encoding use readable and typable characters?**
+
+> How often do you read or write hashes by hand? Unless a paper backup is required, I think it's more important that the encoding be easy to copy/paste and use in various contexts. That and the short length are the strengths of this encoding.
 
 **Can't you up the ante and use Base524288 with 19 bits per tofu?**
 
-> I tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in size efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra tofu in some cases, as the lead byte can't be used for flags. If these issues were somehow solved, I'd reconsider it as an optional base for Entofu.
+> Tried it, and I don't think it's worth it. It complicates the algorithm, negatively affecting performance and room for optimization, and is just not worth the ~5% gain in efficiency. The length would often be the same as Base262144 anyway, due to padding needing an extra tofu in some cases, as the lead byte can't be used for flags.
 
 
 ## Inspiration
 
 - [Base122][base122] by Kevin Albertson
 - [Wikipedia](https://en.wikipedia.org/wiki/Base64#Applications_not_compatible_with_RFC_4648_Base64) ("A UTF-8 environment can use non-synchronized continuation bytes as base64: `0b10xxxxxx`")
+
+I was not aware of [Base65536][base65536] and [Base32768][base32768] until after having made this, but I think they're brilliant.
 
 
 ## License
@@ -185,7 +199,7 @@ The code points are converted back and forth only by bitwise operations, yieldin
 
 
 
-[^1]: Yes, it's perfectly [valid](https://www.unicode.org/faq/basic_q.html#12).
+[^1]: Yes, it's perfectly [valid](https://www.unicode.org/faq/basic_q.html#12). However, see [the first question](#rarely-asked-questions).
 [^2]: Counting [terminal tofus](#self-delimiting-padding) and [noncharacter substitutes](#noncharacters).
 [^3]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
@@ -194,4 +208,6 @@ The code points are converted back and forth only by bitwise operations, yieldin
 [tofu]: https://en.wiktionary.org/wiki/tofu#English:_undisplayable_character
 [uuid]: https://datatracker.ietf.org/doc/html/rfc9562
 [base122]: https://github.com/kevinAlbs/Base122
+[base32768]: https://github.com/qntm/base32768
+[base65536]: https://github.com/qntm/base65536
 [unicode-map]: ./assets/unicode-map.png
