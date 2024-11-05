@@ -167,7 +167,7 @@ The code points are converted back and forth by bitwise operations, yielding the
 >
 > That said, the tofu planes have been selected so that there's a buffer of one unassigned plane on each side (3 and 13). Unicode grows very slowly, by an average of 4487 characters per year (since 2014), so Entofu should be usable for quite some time into the future.
 >
-> But because I can't predict the future, I can't offer any guarantees. If the time horizon is years, not several decades, or if it's only for display purposes, I'd be fine with using Entofu. If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead.
+> But because I can't predict the future, I can't offer any guarantees. If long-term future-proofing is a requirement, I'd recommend [Base65536][base65536] or [Base32768][base32768] instead. If the time horizon is less than several decades, I'd be fine with using Entofu.
 
 **Why did you make an encoding that's less size efficient than Base64?**
 
