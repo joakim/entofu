@@ -192,8 +192,9 @@ I was not aware of [Base65536][base65536] and [Base32768][base32768] until after
 
 ## License
 
-- [Public domain](/LICENSE.md)
-- [The Unicode map][unicode-map] is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/) (thanks!)
+[Public domain](/LICENSE.md), except the following files:
+- [assets/unicode-map.png][unicode-map] licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) by [Nathan Reed](https://www.reedbeta.com/blog/programmers-intro-to-unicode/) (thanks!)
+- [tests/utils/uuid.ts](./tests/utils/uuid.ts) licensed [MIT](https://github.com/uuidjs/uuid/blob/main/LICENSE.md) by contributors to [uuidjs](https://github.com/uuidjs/uuid) (thanks!)
 
 
 
