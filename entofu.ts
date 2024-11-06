@@ -99,14 +99,9 @@ export function entofu(input: Uint8Array): Uint8Array {
       }
     }
 
-    // Handle noncharacter
-    if (
-      (tofu[2] === UNICODE_CONTINUATION_BF) &&
-      (tofu[3] & UNICODE_CONTINUATION_BE) === UNICODE_CONTINUATION_BE &&
-      (tofu[1] & UNICODE_PLANE_XF) === UNICODE_PLANE_XF
-    ) {
+    if (isNoncharacter(tofu)) {
       let special = tofu[0] & 1
-      let plane = (tofu[1] & 0b110000) >> 4
+      let plane = (tofu[1] >> 4) & 0b11
       let noncharacter = tofu[3] & 1
       tofu[0] = UNICODE_LEAD_NONCHAR
       tofu[1] = UNICODE_PLANE_NONCHAR
@@ -138,6 +133,8 @@ export function detofu(input: Uint8Array): Uint8Array {
 
     if ((tofu[0] & 0b11111100) !== UNICODE_LEAD) throw Error(`Invalid leading byte at ${offset}`)
 
+    if (isNoncharacter(tofu)) continue
+
     // Bytes to skip (for padded terminal tofus)
     let skip = 0
 
@@ -165,8 +162,6 @@ export function detofu(input: Uint8Array): Uint8Array {
       if ((tofu[byte] & 0b11000000) !== UNICODE_CONTINUATION)
         throw Error(`Invalid continuation byte at ${offset + byte}`)
 
-      // @todo Ignore/throw on actual noncharacters?
-
       // Fill the bit buffer from the tofu byte's data
       let bits = tofu[byte] & 0b111111
       buffer = (buffer << 6) | bits
@@ -183,4 +178,16 @@ export function detofu(input: Uint8Array): Uint8Array {
 
   // Cap the output to only extracted bytes (may be < length)
   return output.subarray(0, index)
+}
+
+/**
+ * Checks whether a character is, in fact, not a character.
+ * @param tofu Four UTF-8 bytes.
+ */
+function isNoncharacter(tofu: Uint8Array): boolean {
+  return (
+    tofu[2] === UNICODE_CONTINUATION_BF &&
+    (tofu[3] & UNICODE_CONTINUATION_BE) === UNICODE_CONTINUATION_BE &&
+    (tofu[1] & UNICODE_PLANE_XF) === UNICODE_PLANE_XF
+  )
 }
