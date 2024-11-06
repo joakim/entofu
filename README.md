@@ -123,7 +123,7 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 The last tofu of the encoded output is a distinct terminal tofu that handles padding, making it a self-delimiting encoding. Terminal tofus use the unassigned planes 12 and 4-7, above and below the planes used for regular tofus (8-11).
 
-The two least significant bits of the leading byte are used as flags for the type of tofu (regular/terminal/noncharacter), resulting in the planes used.
+The two least significant bits of the leading byte are used as [bit flags](./assets/bitwise%20terminals.png) for the type of tofu (regular/terminal/noncharacter), resulting in the planes used.
 
 
 ### Noncharacters
@@ -154,7 +154,7 @@ When decoding, any substitute code points must be converted back to their respec
 - `U+7FFFE` ⟷ `U+D000E`
 - `U+7FFFF` ⟷ `U+D000F`
 
-The code points are converted back and forth by bitwise operations, yielding the sequence above.
+The code points are converted back and forth by [bitwise operations](./assets/bitwise%20noncharacters.png), yielding the sequence above.
 
 (These substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign any meaning, they're merly stand-ins for noncharacters by necessity, as the upper planes include the Special-purpose and Private Use Area planes that may not be used.)
 
