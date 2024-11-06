@@ -1,8 +1,8 @@
 # Public Domain
 
-The Entofu algorithm (Base262144) is public domain. The author disclaims copyright to this source code.
+The Entofu algorithm (Base262144) is public domain. The authors disclaim copyright to this source code.
 
-In place of a legal notice, here's an excerpt from The Idiot by Fyodor Dostoevsky.
+In place of a wall of legalese, here's an excerpt from The Idiot by Fyodor Dostoevsky.
 
 ---
 
