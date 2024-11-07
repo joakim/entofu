@@ -136,11 +136,11 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 ## Particularities
 
-### Self-delimiting (padding)
+### Terminals
 
 The last tofu of the encoded output is a distinct terminal tofu that handles padding, making it a self-delimiting encoding. Terminal tofus use the unassigned planes 12 and 4-7, above and below the planes used for regular tofus (8-11).
 
-The two least significant bits of the leading byte are used as [bit flags](./assets/bitwise-terminals.png) for the type of tofu (regular/terminal/noncharacter), resulting in the planes used.
+The two least significant bits of the leading byte are used as [bit flags](./assets/bitwise-terminals.png) for the type of tofu (regular/terminal/noncharacter), resulting in the planes used and the 18 bits available for data.
 
 
 ### Noncharacters
@@ -216,7 +216,7 @@ I was not aware of [Base65536][base65536] and [Base32768][base32768] until after
 
 
 [^1]: Yes, it's perfectly [valid](https://www.unicode.org/faq/basic_q.html#12). However, see [the first question](#rarely-asked-questions).
-[^2]: Counting [terminal tofus](#self-delimiting-padding) and [noncharacter substitutes](#noncharacters).
+[^2]: Counting [terminal tofus](#terminals) and [noncharacter substitutes](#noncharacters).
 [^3]: Depending on the font used. By changing the font, you can control its [appearance](#textual-representation).
 [^4]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
