@@ -67,7 +67,7 @@ let output = detofu(tofus)
 //=> 'hello, world'
 ```
 
-These functions rely on JavaScript's [Encoding API](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API) to convert between UTF-8 and UTF-16. While this is widely supported, should the JavaScript runtime not support [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder), use the underlying `encode` and `decode` functions instead to only work with byte arrays:
+These functions rely on JavaScript's [Encoding API](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API) to convert between UTF-8 and UTF-16. While this is widely supported, should the JavaScript runtime not support [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder), use the underlying `encode` and `decode` functions instead to work directly with byte arrays:
 
 ```js
 import { encode, decode } from 'entofu'
