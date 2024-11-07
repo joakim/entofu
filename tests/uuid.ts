@@ -1,34 +1,30 @@
 import { randomUUID } from 'node:crypto'
-import { entofu, detofu } from '../entofu.ts'
-import { parse, stringify } from './utils/uuid.ts'
+import { encode, decode } from '../entofu.ts'
+import * as uuid from './utils/uuid.ts'
 
 // Who needs a test runner?
 
 // UUID string
-let uuid = randomUUID()
-console.log('uuid\t', uuid)
+let input = randomUUID()
+console.log('input\t', input)
 
 // UUID binary
-let binary = parse(uuid)
+let binary = uuid.parse(input)
 console.log('binary\t', binary)
 
 // Tofu encoded binary
-let encoded = entofu(binary)
+let encoded = encode(binary)
 console.log('encoded\t', encoded)
 
-// Tofu string
-let string = new TextDecoder('utf8').decode(encoded)
-console.log('string\t', string)
-
 // Tofu decoded binary (should be identical to input)
-let decoded = detofu(encoded)
+let decoded = decode(encoded)
 console.log('decoded\t', decoded)
 
 // UUID string
-let uuid2 = stringify(decoded)
-console.log('uuid2\t', uuid2)
+let output = uuid.stringify(decoded)
+console.log('output\t', output)
 
-let outcome = uuid2 === uuid ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m'
+let outcome = output === input ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m'
 console.log(outcome)
 
 // Alright, now that it works I should write some real tests…

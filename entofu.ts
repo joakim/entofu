@@ -27,31 +27,51 @@ const UNICODE_PLANE_NONCHAR = 0x90 // 0b10010000
 const UNICODE_PLANE_XF = 0x8f // 0b10001111
 
 /**
- * Encodes binary data into a tofu string.
+ * Encodes a string into a tofu string.
+ * @param input Text.
+ * @returns Entofu encoded text.
+ **/
+export function entofu(input: string): string {
+  let binary = new TextEncoder().encode(input)
+  return stringify(binary)
+}
+
+/**
+ * Decodes a tofu string into its original string.
+ * @param input Entofu encoded text.
+ * @returns Text.
+ **/
+export function detofu(input: string): string {
+  let text = parse(input)
+  return new TextDecoder('utf8').decode(text)
+}
+
+/**
+ * Encodes binary data into a tofu string (UTF-16).
  * @param input Binary data.
- * @returns Entofu encoded data as a string.
+ * @returns Entofu encoded data (as a string).
  */
 export function stringify(input: Uint8Array): string {
-  let encoded = entofu(input)
+  let encoded = encode(input)
   return new TextDecoder('utf8').decode(encoded)
 }
 
 /**
- * Decodes a tofu string into binary data.
- * @param input Entofu encoded data as a string.
+ * Decodes a tofu string (UTF-16) into binary data.
+ * @param input Entofu encoded data (as a string).
  * @returns Binary data.
  */
 export function parse(input: string): Uint8Array {
   let encoded = new TextEncoder().encode(input)
-  return detofu(encoded)
+  return decode(encoded)
 }
 
 /**
- * Encodes binary data into tofu.
+ * Encodes binary data into tofu bytes (UTF-8).
  * @param input Binary data.
- * @returns Entofu encoded data as UTF-8 bytes.
+ * @returns Entofu encoded data as UTF-8 byte array.
  */
-export function entofu(input: Uint8Array): Uint8Array {
+export function encode(input: Uint8Array): Uint8Array {
   let bits = input.byteLength * BITS_PER_BYTE
   let length = Math.ceil(bits / BITS_PER_TOFU) * 4 // in tofus
   let output = new Uint8Array(length)
@@ -116,11 +136,11 @@ export function entofu(input: Uint8Array): Uint8Array {
 }
 
 /**
- * Decodes tofu into binary data.
- * @param input Entofu encoded data as UTF-8 bytes.
+ * Decodes tofu bytes (UTF-8) into binary data.
+ * @param input Entofu encoded data as a UTF-8 byte array.
  * @returns Binary data.
  */
-export function detofu(input: Uint8Array): Uint8Array {
+export function decode(input: Uint8Array): Uint8Array {
   let length = Math.ceil(((input.length / 4) * BITS_PER_TOFU) / BITS_PER_BYTE)
   let output = new Uint8Array(length)
 
@@ -182,7 +202,7 @@ export function detofu(input: Uint8Array): Uint8Array {
 
 /**
  * Checks whether a character is, in fact, not a character.
- * @param tofu Four UTF-8 bytes.
+ * @param tofu A UTF-8 code point (4 bytes).
  */
 function isNoncharacter(tofu: Uint8Array): boolean {
   return (

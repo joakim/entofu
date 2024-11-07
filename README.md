@@ -29,7 +29,7 @@ This library also serves as the reference implementation of the algorithm (see [
 
 ### Status
 
-Alpha. The algorithm is fully implemented and seems to be correct, but has not yet been thoroughly tested.
+Alpha. The algorithm is fully implemented and [seems to be](./tests/) correct, but has not yet been thoroughly tested.
 
 Next: Write a test suite.
 
@@ -37,37 +37,54 @@ Next: Write a test suite.
 
 Install [`entofu`][npm] using your package manager of choice.<!--from npm, alternatively [`@joakim/entofu`][jsr] from jsr. The code below assumes npm.-->
 
+To encode/decode binary data, use `stringify` and `parse`:
+
 ```js
 import { stringify, parse } from 'entofu'
 
-let data = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+let input = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9])
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
-let encoded = stringify(data)
-//=> 򀐈򃁀򔆁񰠉
+let tofus = stringify(input)
+//=> '򀐈򃁀򔆁񰠉'
 
-let decoded = parse(encoded)
+let output = parse(tofus)
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 ```
 
-The functions `stringify` and `parse` rely on JavaScript's widely supported [Encoding API](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API) to convert to and from UTF-8. If the JavaScript runtime does not support [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder), or you want to work directly with byte arrays, use the `entofu` and `detofu` functions instead.
+To encode/decode strings, use `entofu` and `detofu`:
 
 ```js
 import { entofu, detofu } from 'entofu'
 
-let data = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+let input = 'hello, world'
+//=> 'hello, world'
+
+let tofus = entofu(input)
+//=> '򚆕򬛆򼬈򇝯򜦱󀤀'
+
+let output = detofu(tofus)
+//=> 'hello, world'
+```
+
+These functions rely on JavaScript's [Encoding API](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API) to convert between UTF-8 and UTF-16. While this is widely supported, should the JavaScript runtime not support [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder), use the underlying `encode` and `decode` functions instead:
+
+```js
+import { encode, decode } from 'entofu'
+
+let input = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9])
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
-let encoded = entofu(data)
+let bytes = encode(input)
 // Uint8Array(16) [ 242, 128, 144, 136, 242, 131, 129, 128, 242, 148, 134, 129, 241, 176, 160, 137 ]
 
-let decoded = detofu(encoded)
+let output = decode(bytes)
 //=> Uint8Array(9) [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 ```
 
 ## Efficiency
 
-Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuation bytes:
+Each 32-bit UTF-8 code point can hold 18 (3 × 6) bits of binary data in its continuation bytes:
 
 |        | 1st byte   | 2nd byte   | 3rd byte   | 4th byte   |
 | ------ | ---------- | ---------- | ---------- | ---------- |
@@ -80,7 +97,7 @@ That makes it not suitable for large binaries if _size_ matters, but useful for 
 
 ### Theoretical numbers
 
-Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
+Entofu falls between Base16 and Base32 in size efficiency (UTF-8), while only a fraction of the length.
 
 |                                 | Base8 | Base16 | Base32 | Base64 | Base262144 (Entofu) |
 | ------------------------------- | ----- | ------ | ------ | ------ | ------------------- |
