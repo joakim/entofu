@@ -31,7 +31,7 @@ This library also serves as the reference implementation of the algorithm (see [
 
 Alpha. The algorithm is fully implemented and seems to be correct, but has not yet been thoroughly tested.
 
-Next: Write a test suite. Maybe make it streamy?
+Next: Write a test suite.
 
 ### Usage
 
