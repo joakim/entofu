@@ -11,7 +11,7 @@ Alternatively, it's a Base262144 encoding that uses almost half of Unicode as it
 
 It is less [efficient](#efficiency) but much shorter (and better looking [^3]) than common encodings like Base64 and Base85.
 
-| Bits | Output                        | Length | Size in UTF-8      |
+| Bits | Output                        | Length | Size               |
 | ---- | ----------------------------- | ------ | ------------------ |
 | 128  | 򀂘򡶢򝁉򛣤򋡷򱻧򑬍󁀐                      | 8      | 256 bits (2×)      |
 | 256  | 򡙘򾧙򸁠򒗤򓮨򩻑򊰟򂌦򊻑򛽈򾝦򈖮򯴐򄻱󁀔               | 15     | 480 bits (1.875×)  |
@@ -84,7 +84,7 @@ let output = decode(bytes)
 
 ## Efficiency
 
-Each 32-bit UTF-8 code point can hold 18 (3 × 6) bits of binary data in its continuation bytes:
+Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuation bytes:
 
 |        | 1st byte   | 2nd byte   | 3rd byte   | 4th byte   |
 | ------ | ---------- | ---------- | ---------- | ---------- |
@@ -97,7 +97,7 @@ That makes it not suitable for large binaries if _size_ matters, but useful for 
 
 ### Theoretical numbers
 
-Entofu falls between Base16 and Base32 in size efficiency (UTF-8), while only a fraction of the length.
+Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
 
 |                                 | Base8 | Base16 | Base32 | Base64 | Base262144 (Entofu) |
 | ------------------------------- | ----- | ------ | ------ | ------ | ------------------- |
@@ -115,7 +115,7 @@ Entofu falls between Base16 and Base32 in size efficiency (UTF-8), while only a 
 
 UUIDs actually represent the worst case, with the last tofu only encoding 2 bits. It is still smaller in size than the typical UUID string. In length, it is by far the shortest encoding.
 
-| Encoding         | Output                               | Length    | Size in UTF-8      |
+| Encoding         | Output                               | Length    | Size               |
 | ---------------- | ------------------------------------ | --------- | ------------------ |
 | [RFC 9562][uuid] | 90f119cf-9fc4-4090-acc1-0000bc711dc3 | 36 chars  | 288 bits (2.25×)   |
 | Base16           | 90f119cf9fc44090acc10000bc711dc3     | 32 chars  | 256 bits (2×)      |
