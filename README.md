@@ -140,7 +140,7 @@ That said, they're not exactly typable, and they're only readable if the _missin
 
 The last tofu of the encoded output is a distinct terminal tofu that handles padding, making it a self-delimiting encoding. Terminal tofus use the unassigned planes 12 and 4-7, above and below the planes used for regular tofus (8-11).
 
-The two least significant bits of the leading byte are used as [bit flags](./assets/bitwise-terminals.png) for the type of tofu (regular/terminal/noncharacter), resulting in the planes used and the 18 bits available for data.
+The two least significant bits of the leading byte are used as [bitwise flags](./assets/bitwise-terminals.png) for the type of tofu (regular/terminal/noncharacter), resulting in the planes used and the 18 bits available for data.
 
 
 ### Noncharacters
