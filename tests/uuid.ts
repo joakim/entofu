@@ -24,7 +24,7 @@ console.log('decoded\t', decoded)
 let output = uuid.stringify(decoded)
 console.log('output\t', output)
 
-let outcome = output === input ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m'
-console.log(outcome)
+let result = output === input
+console.log(result ? '\x1b[32msuccess\t 🥳🎉🎊🪅\x1b[0m' : '\x1b[31mnot yet\t 🧐\x1b[0m')
 
 // Alright, now that it works I should write some real tests…
