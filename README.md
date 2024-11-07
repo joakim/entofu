@@ -9,7 +9,7 @@ Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the e
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
-It is less [efficient](#efficiency) but much shorter (and better looking) than common encodings like Base64 and Base85.
+It is less [efficient](#efficiency) but much shorter (and better looking [^3]) than common encodings like Base64 and Base85.
 
 | Bits | Output                        | Length | Size in UTF-8      |
 | ---- | ----------------------------- | ------ | ------------------ |
@@ -127,7 +127,7 @@ UUIDs actually represent the worst case, with the last tofu only encoding 2 bits
 
 ## Textual representation
 
-Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu][tofu] – which differs by [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). If a font doesn't provide a _missing glyph_, a [fallback font](https://en.wikipedia.org/wiki/Fallback_font) that does may be used. [^3]
+Each unassigned code point will be [displayed](https://www.unicode.org/faq/unsup_char.html) as a _missing glyph_ – that is, a [tofu][tofu] – which differs by [font](https://learn.microsoft.com/en-us/typography/opentype/spec/recom#glyph-0-the-notdef-glyph). By changing the font, you can change the appearance of tofus. If a font doesn't provide a _missing glyph_, a [fallback font](https://en.wikipedia.org/wiki/Fallback_font) that does may be used. [^4] It's possible to make a custom fallback font for tofus to control its appearance.
 
 Unlike many base encodings, Entofu does not produce any characters that have special meaning in code or protocols. And unlike the related [Base122][base122], it doesn't produce characters that make selection, keyboard navigation and copy/paste difficult. Tofus are relatively unproblematic.
 
@@ -217,7 +217,8 @@ I was not aware of [Base65536][base65536] and [Base32768][base32768] until after
 
 [^1]: Yes, it's perfectly [valid](https://www.unicode.org/faq/basic_q.html#12). However, see [the first question](#rarely-asked-questions).
 [^2]: Counting [terminal tofus](#self-delimiting-padding) and [noncharacter substitutes](#noncharacters).
-[^3]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
+[^3]: Depending on the font used. By changing the font, you can control its [appearance](#textual-representation).
+[^4]: With Unicode's [Last Resort Font](https://github.com/unicode-org/last-resort-font/) used as a fallback font, a code point is a square with the number of its plane in a circle. Firefox uses a rectangle displaying the code point in hex. It has that binary feel to it. On Apple systems, GitHub's missing glyph looks like a block of tofu that has been sliced into 6 pieces.
 
 [npm]: https://www.npmjs.com/package/entofu
 [jsr]: https://jsr.io/@joakim/entofu
