@@ -99,12 +99,12 @@ That makes it not suitable for large binaries if _size_ matters, but useful for 
 
 Entofu falls between Base16 and Base32 in size efficiency, while only a fraction of the length.
 
-|                                 | Base8 | Base16 | Base32 | Base64 | Base262144 (Entofu) |
-| ------------------------------- | ----- | ------ | ------ | ------ | ------------------- |
-| Size <sup>Ⅰ</sup>               | 1×    | 2×     | 1.6×   | 1.333× | 1.777×              |
-| Size efficiency <sup>Ⅱ</sup>   | 100%  | 50%    | 62.5%  | 75% ★  | 56.25%              |
-| Length <sup>Ⅲ</sup>           | 1×    | 2×     | 1.6×   | 1.333× | 0.444×              |
-| Length efficiency <sup>Ⅳ</sup> | 100%  | 50%    | 62.5%  | 75%    | 225% ★              |
+|                                 | Original | Base16 | Base32 | Base64 | Base262144 (Entofu) |
+| ------------------------------- | -------- | ------ | ------ | ------ | ------------------- |
+| Size <sup>Ⅰ</sup>               | 1×       | 2×     | 1.6×   | 1.333× | 1.777×              |
+| Size efficiency <sup>Ⅱ</sup>   | 100%     | 50%    | 62.5%  | 75% ★  | 56.25%              |
+| Length <sup>Ⅲ</sup>           | 1×       | 2×     | 1.6×   | 1.333× | 0.444×              |
+| Length efficiency <sup>Ⅳ</sup> | 100%     | 50%    | 62.5%  | 75%    | 225% ★              |
 
 <sup>Ⅰ) Ratio between output bits and input bits, showing inflation in size (lower is better).</sup>\
 <sup>Ⅱ) The inverse ratio, showing the size efficiency as a percentage (higher is better).</sup>\
