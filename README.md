@@ -9,7 +9,7 @@ Entofu stuffs binary data into 262,144 tofus of Unicode planes 8 to 11 – the e
 
 Alternatively, it's a Base262144 encoding that uses almost half of Unicode as its alphabet. [^2]
 
-It is less [efficient](#efficiency) but much shorter (and better looking [^3]) than common encodings like Base64 and Base85.
+It is [less efficient but much shorter](#efficiency) (and better looking [^3]) than common encodings like Base64 and Base85.
 
 | Bits | Output                        | Length | Size               |
 | ---- | ----------------------------- | ------ | ------------------ |
