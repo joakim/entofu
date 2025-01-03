@@ -173,7 +173,7 @@ When decoding, any substitute code points must be converted back to their respec
 
 The code points are converted back and forth by [bitwise operations](./assets/bitwise-noncharacters.png), yielding the sequence above.
 
-(These substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign any meaning, they're merly stand-ins for noncharacters by necessity, as the upper planes include the Special-purpose and Private Use Area planes that may not be used.)
+(These substitutes are still unassigned code points used to represent binary data, in this case 15-18 consecutive `1` bits. Entofu does not assign any meaning, they're merely stand-ins for noncharacters by necessity, as the upper planes include the Special-purpose and Private Use Area planes that may not be used.)
 
 
 ## Rarely Asked Questions
