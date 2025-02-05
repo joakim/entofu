@@ -93,7 +93,7 @@ Each 32-bit code point can hold 18 (3 × 6) bits of binary data in its continuat
 
 Tofus contain _3×_ more data than Base64 characters, making it visually much smaller. This comes at a cost of more overhead and larger size of the encoded data in storage (memory or disk).
 
-That makes it not suitable for large binaries if _size_ matters, but useful for smaller binaries like UUIDs and hashes, where _length_ matters.
+That makes it not suitable for large binaries if _size_ matters, but useful if you need to represent binary data in text without producing invalid or problematic characters. It may also be used for smaller binaries like UUIDs and hashes where _length_ matters.
 
 ### Theoretical numbers
 
